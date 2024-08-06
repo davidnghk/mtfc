@@ -1,0 +1,18 @@
+    <div class="panel panel-default">
+      <div class="panel-heading"><%= current_user.name %></div>
+      <div class="panel-body">
+        <% if current_user.admin? %>
+          <%= link_to t('business_unit'), chatrooms_path %>
+        <% else %>
+          <%= t('business_unit') %>
+        <% end %>
+        <ul class="sidebar-list">
+          <ul>
+            <% current_user.chatrooms.public_channels.each do |chatroom| %>
+              <li><%= link_to chatroom.display_name, chatroom, data: {behavior: "chatroom-link", chatroom_id: chatroom.id} %></li>
+            <% end %>
+          </ul>
+
+        </ul>
+      </div> 
+    </div>

@@ -1,0 +1,33 @@
+
+<%= paginate @workflows %>
+
+<table id="workflow" class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= t('work') %></th>
+      <th><%= t('location') %></th>
+      <th><%= t('business_unit') %></th>
+      <th><%= t('assignment_method') %></th>
+      <th colspan="3"></th> 
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @workflows.each do |workflow| %>
+      <tr>
+         <td><i class="material-icons"> <%= workflow.work.icon %> </i> <%= workflow.work.code %></td>
+        <td><%= workflow.location.display_name %></td>
+        <td><%= workflow.business_unit.display_name %></td>
+        <td><%= t(workflow.assignment) %></td>
+        <td><%= link_to '<i class="fa fa-folder-open fa-2x"></i>'.html_safe,  workflow %></td>
+        <td><%= link_to '<i class="fa fa-edit fa-2x"></i>'.html_safe, 
+            edit_workflow_path(workflow) %> </td>
+         <td><%= link_to '<i class="fa fa-trash fa-2x"></i>'.html_safe, workflow, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to '<i class="fa fa-plus-circle fa-2x"></i>'.html_safe, new_workflow_path %>

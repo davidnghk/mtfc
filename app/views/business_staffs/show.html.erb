@@ -1,0 +1,16 @@
+<div class="container">
+  <div class="panel panel-default">
+    <div class="panel-heading"><%= t('business_staffs') %></div>
+    <div class="panel-body"><br/>  
+
+		<p><strong><%= t('business_unit') %>: </strong><%= @business_staff.business_unit.display_name %></p>
+		<p><strong><%= t('post') %>: </strong><%= @business_staff.post.display_name %></p>
+		<p><strong><%= t('user') %>: </strong><%= @business_staff.user.username %></p>
+
+  </div>
+</div>
+<br/>
+
+<%= link_to '<i class="fa fa-edit fa-2x"></i>'.html_safe, edit_business_staff_path(@business_staff) %> | 
+<%= link_to '<i class="fa fa-list-alt fa-2x"></i>'.html_safe,  business_staffs_path, data: { turbolinks: false } %>
+<%= link_to '<i class="fa fa-trash fa-2x"></i>'.html_safe, @business_staff, method: :delete, data: { confirm: 'Are you sure?' } %>

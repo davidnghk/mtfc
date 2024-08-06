@@ -1,0 +1,32 @@
+<p id="demo">Click the button to get your coordinates:</p>
+<button onclick="getLocation()">Try It</button>
+<script>
+    var x=document.getElementById("demo");
+    var lat;
+    var long;
+    function getLocation()
+    {
+        if (navigator.geolocation)
+        {
+            navigator.geolocation.getCurrentPosition(showPosition);
+
+        }
+        else{x.innerHTML="Geolocation is not supported by this browser.";}
+    }
+    function showPosition(position)
+    {
+        lat = position.coords.latitude;
+        long = position.coords.longitude;
+        x.innerHTML="Latitude: " + lat +
+                "<br>Longitude: " + long;
+
+        $.ajax({
+            type: 'POST',
+            url: 'https://localhost:3000/locations',
+            data: { lat: lat, long: long },
+            contentType: 'application/json',
+            dataType: 'json'
+
+        });
+    }
+</script>

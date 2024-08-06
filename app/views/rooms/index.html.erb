@@ -1,0 +1,78 @@
+  <div class="btn-group d-flex" role="toolbar" aria-label="Toolbar with button groups">
+    <%= link_to t('Vacant'), rooms_path(:status => 0 ), data: { turbolinks: false }, class: "btn btn-normal btn-default " %>  
+    <%= link_to t('Occupied'), rooms_path(:status => 1 ), data: { turbolinks: false }, class: "btn btn-normal btn-default " %>  
+    <%= link_to t('Others'), rooms_path(:status => 2 ), data: { turbolinks: false }, class: "btn btn-normal btn-default " %>  
+  </div>
+<%= paginate @rooms  %> 
+<table>
+  <thead>
+    <tr>
+      <th><%= t('location') %></th>
+      <th><%= t('category') %></th>
+      <th><%= t('acc') %> </th>
+      <th><%= t('bed') %> </th>
+      <th><%= t('area') %> </th>
+      <th><%= t('baths') %> </th>
+      <th><%= t('tv') %> </th>
+      <th><%= t('kitchen') %></th>
+      <th><%= t('air') %> </th>
+      <th><%= t('wifi') %> </th>
+      <th><%= t('smoking') %> </th>
+      <th><%= t('condition') %> </th>
+      <th><%= t('status') %> </th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @rooms.each do |room| %>
+      <tr data-link="<%= room_path(room) %>">
+        <td><%= link_to room.room_no, room %></td>
+        <td><%= room.category.display_name %></td>
+        <td><%= room.accomodate %></td>
+        <td><%= room.bed_type.display_name %></td>
+        <td><%= room.area %></td>
+        <td><%= room.bath_room %></td>
+
+        <% if room.tv >  0 %>
+          <td><%= '<i class="fa fa-tv   "></i>'.html_safe %></td>
+        <% else %>
+          <td></td>
+        <% end %>
+
+
+        <td><%= room.has_kitchen %></td>
+
+        <% if room.has_air %>
+          <td><%= '<i class="fa fa-thermometer "></i>'.html_safe %></td>
+        <% else %>
+          <td></td>
+        <% end %>
+
+        <% if room.has_wifi %>
+          <td><%= '<i class="fa fa-wifi "></i>'.html_safe %></td>
+        <% else %>
+          <td></td>
+        <% end %>
+
+        <td><%= t(room.smoking) %></td>
+        <td><%= t(room.condition) %></td>        
+        <td><%= t(room.status) %></td>
+        <% if room.status == 'Vacant' %>
+          <td><%= link_to '<i class="fa fa-sign-in fa-2x" style="color: green"></i>'.html_safe, new_booking_path %></td>
+        <% else %>
+          <td><%= link_to '<i class="fa fa-sign-out fa-2x" style="color: red"></i>'.html_safe, new_room_path %></td>
+        <% end %>
+        <td>
+          <!--
+        <button class="fa fa-sign-in fa-2x" style="color: green" data-toggle="modal" data-target="#approvalModal"></button>
+      -->
+      </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%#= link_to '<i class="fa fa-broom fa-2x"></i>'.html_safe, new_room_path %>
+</div>

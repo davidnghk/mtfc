@@ -1,0 +1,95 @@
+<div class="row ">
+	<div  class="col-xs-4 col-md-6  ">
+	  <strong><%= t('task') %>:</strong>
+	  <%=  @defect.assignment.no %> <%=  @defect.assignment.work.display_name %> 
+	</div>
+
+	<div  class="col-xs-4 col-md-6  ">
+	  <strong><%= t('defect') %>:</strong>
+	  <%= @defect.issue.full_name  %>
+	</div>
+</div>
+
+<div class="row ">
+	<div  class="col-xs-4 col-md-6  ">
+	  <strong><%= t('model') %>:</strong>
+	  <%= @defect.item %>
+	</div>
+
+	<div  class="col-xs-4 col-md-6  ">
+	  <strong><%= t('code') %>:</strong>
+	  <%= @defect.item_id %>
+	</div>
+</div>
+
+<div class="row ">
+	<div  class="col-xs-12 col-md-12  ">
+	  <strong><%= t('rating') %>:</strong>
+	  <%= @defect.rating %>
+	</div>
+</div>
+
+<p>
+  <strong><%= t('remarks') %>:</strong>
+  <%= @defect.remarks %>assignment
+</p>
+
+<% if @defect.officers.count > 0 %>
+  <div class="container-fluid" style="border:1px solid #cecece;" ><br>
+		<table class="table table-striped" style="line-height: 0.5">
+		  <thead >
+		  	<%= t('user') %>
+		    <tr >
+		      <th><%= t('name') %></th>
+		      <th><%= t('password') %></th>
+		    </tr>
+		  </thead> 
+
+		  <tbody>
+		    <% @defect.officers.each do |officer| %>
+		      <tr >
+		        <td><%= officer.name %></td>
+		        <td><%= officer.passwd %></td>
+		      </tr>
+		    <% end %>
+		  </tbody>
+		</table>
+	</div><br>
+<% end %>
+
+<div align="center" class="row">
+	<div  class="col-xs-12 col-md-12  ">
+		<%= render 'photo_upload' %>
+	</div>
+</div>
+<br> 
+<%= link_to '<i class="fa fa-edit fa-2x"></i>'.html_safe,  edit_defect_path(@defect), data: { turbolinks: false }  %> 
+<%= link_to '<i class="fa fa-list-alt fa-2x"></i>'.html_safe,  @defect.assignment, data: { turbolinks: false } %>
+<br>
+
+  <div id="map",  style="height:100%;width:auto;"></div>
+  <div id="defect_photo_details"><%= render 'photos/defect_photo_details' %> </div>
+<script>
+
+  function initialize() {
+    var location = {lat: 22.260, lng: 114.18828}
+
+    var map = new google.maps.Map(document.getElementById('map'), {
+      center: location,
+      zoom: 12
+    });
+
+    <% @defect.photos.any? do  %>
+      <% @defect.photos.each do |photo| %>
+        <% if photo.latitude.present? %>
+          new google.maps.Marker({
+            position: {lat: <%= photo.latitude %>, lng: <%= photo.longitude %> },
+            map: map
+          })
+        <% end %> 
+      <% end %>
+    <% end %>``
+  }
+
+  google.maps.event.addDomListener(window, 'load', initialize);
+</script>

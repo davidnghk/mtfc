@@ -1,0 +1,97 @@
+
+<% if mobile_device?  %> 
+        <br><br>
+          <div class="col-xs-4 col-md-4">
+            <div class="text-center">
+                <%= link_to '<i class="fa fa-file fa-5x" style="color:green"></i>'.html_safe,  new_assignment_path, data: { turbolinks: false } %>  
+            </div>
+          </div>
+
+        <div class="row">
+          <div class="col-xs-4 col-md-4">
+            <div class="text-center">
+              <%= link_to '<i class="fa fa-list-alt fa-5x" style="color:green"></i>'.html_safe,  assignments_path, data: { turbolinks: false } %>
+            </div>
+          </div>
+ 
+          <div class="col-xs-4 col-md-4">
+            <div class="text-center">
+                <%= link_to '<i class="fa fa-info-circle fa-5x" style="color:green"></i>'.html_safe,  
+                help_path, data: { turbolinks: false } %>
+            </div>
+          </div>
+
+        </div>
+
+<% else %>
+       
+        <br><br>
+        <div class="row">
+          <div class="col-xs-4 col-md-4">
+            <div class="text-center">
+              <%= link_to '<i class="fa fa-list-alt fa-5x" style="color:green"></i>'.html_safe,  assignments_path, data: { turbolinks: false } %>
+            </div>
+          </div>
+          <div class="col-xs-4 col-md-4">
+              <div class="text-center">
+                  <%= link_to '<i class="fa fa-info-circle fa-5x" style="color:green"></i>'.html_safe,  
+                  help_path, data: { turbolinks: false } %>
+              </div>
+          </div>
+
+        </div>
+        <br><br>
+
+        <% if current_user.admin? or current_user.manager? %>
+
+          <div class="row">
+            <div class="col-xs-4 col-md-4">
+              <div class="text-center">
+                <%= link_to '<i class="fa fa-file fa-5x" style="color:green"></i>'.html_safe,  new_assignment_path, data: { turbolinks: false } %>            
+              </div>
+            </div>
+          
+            <div class="col-xs-4 col-md-4">
+              <div class="text-center">
+                  <%= link_to '<i class="fa fa-calendar fa-5x" style="color:green"></i>'.html_safe,  assignment_calendar_path, data: { turbolinks: false } %>
+              </div>
+            </div>
+          </div>
+          <br><br>
+
+          <div class="row">
+            <div class="col-xs-4 col-md-4">
+              <div class="text-center">
+                  <%= link_to '<i class="fa fa-volume-up fa-5x" style="color:green"></i>'.html_safe,  
+                  announcements_path, data: { turbolinks: false } %>
+              </div>
+            </div>
+            <div class="col-xs-4 col-md-4">
+                <div class="text-center">
+                  <%= link_to '<i class="fa fa-search fa-5x" style="color:green"></i>'.html_safe,  assignments_path(:commit => "Search"), data: { turbolinks: false } %>
+                </div>
+              </div>
+          </div>
+        <% end %>
+        <br><br>
+
+  <div class="row">
+    <div class="col-md-8">
+      <!-- Your Listings -->
+      <div class="panel panel-default">
+        <div class="panel-heading"><%= t('your_listings') %> (<%= @assignments.length %>)</div>
+        <div class="panel-body">
+          <br><br>
+          <% if !mobile_device?  %> 
+            <%= render partial: "assignments/assignment_list", locals: {assignments: @assignments} %>      
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+      <div class="col-md-4">
+        <%= render partial: "shared/rightbar" %>
+      </div>
+     
+    </div>
+<% end %>

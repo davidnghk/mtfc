@@ -1,0 +1,23 @@
+
+  <div class="panel panel-default">
+    <div class="panel-heading"><%= t('announcements') %></div>
+    <div class="panel-body">
+      <br/>
+      <%= simple_form_for(@announcement) do |f| %>
+
+      <div class="form-inputs">
+        <%= f.input :start_at, as: :date, html5: true %>
+        <%= f.input :end_at, as: :date, html5: true %>
+        <%= f.input :content %>
+        <%= f.association :business_unit, :collection => Chatroom.business_units %>
+      </div>
+
+        <div class="form-actions">
+          <%= button_tag type: 'submit', class: "button my-button", id: "register-button" do %>
+              <i class="fa fa-save fa-2x" aria-hidden="true"></i>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+

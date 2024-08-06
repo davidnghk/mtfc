@@ -1,0 +1,24 @@
+<%= simple_form_for @assignment, remote: true do |f| %>
+
+  <div class="form-inputs">
+    <%= f.association :work, :collection => Master.work, class: 'input-sm '  %>
+    <%= f.association :location, class: 'input-sm ' %>
+    <%= f.association :incharge_user, class: 'input-sm ' %>
+    <%= f.association :worker_user, class: 'input-sm ' %>
+
+    <%= f.input :date_range, label: t('date_range'), input_html: { class: "form-control input-sm date-range-picker" } %>
+    <%= f.input_field :start_datetime, as: :hidden, value: Date.today, class: 'form-control input-sm start_hidden' %>
+    <%= f.input_field :due_datetime, as: :hidden, value: Date.today, class: 'form-control input-sm end_hidden' %>
+    <%= f.input :color, label: t('color'), as: :select, collection: [['Black','black'], ['Green','green'], ['Red','red']] %>
+  </div>
+
+  <div class="form-actions">
+    <%= button_tag type: 'submit', class: "button my-button", id: "register-button" do %>
+        <i class="fa fa-save fa-2x" aria-hidden="true"></i>
+    <% end %>
+    <%= link_to duty, remote: true, method: :delete,
+         data: {confirm: "Are your sure? "} do %>
+           <i class="fa fa-trash-o fa-2x" aria-hidden="true"></i>
+    <% end %>
+  </div>
+<% end %>

@@ -1,0 +1,41 @@
+
+<div class="container">
+  <div class="panel panel-default">
+    <div class="panel-heading"><%= t('assignement') %></div>
+    <div class="panel-body">
+    	<p><strong><%= t('work') %>: </strong><%= @assignment.work.name %></p>
+		<p><strong><%= t('location') %>: </strong><%= @assignment.location.name %></p>
+		<p><strong><%= t('incharge') %>: </strong><%= @assignment.incharge_user.name %></p>
+		<p><strong><%= t('heading') %>: </strong><%= @assignment.heading %></p>
+		<p><strong><%= t('start_date') %>: </strong>
+			<%= @assignment.start_datetime.strftime('%F %I:%M %P') if @assignment.start_datetime? %></p>
+		<p><strong><%= t('status') %>: </strong><%= @assignment.aasm_state %></p>
+		<p><strong><%= t('due_date') %>: </strong>
+			<%= @assignment.due_datetime.strftime('%F %I:%M %P') if @assignment.due_datetime? %></p>
+		<p><strong><%= t('end_date') %>: </strong>
+			<%= @assignment.end_datetime.strftime(('%F %I:%M %P') if @assignment.end_datetime? %></p>
+
+		<strong><%= t('photos') %>: </strong><br/>	
+
+              <!-- PHOTOS UPLOAD GOES HERE -->
+		  <div class="form-group">
+		    <%= form.label :uploads %>
+		    <%= form.file_field :uploads, multiple: true, class: "form-control" %>
+		  </div>
+
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+
+
+
+		<br/>
+
+		<%= link_to '<i class="fa fa-edit fa-2x"></i>'.html_safe, edit_assignment_path(@assignment) %>  
+		<%= link_to '<i class="fa fa-list-alt fa-2x"></i>'.html_safe,  assignments_path, data: { turbolinks: false } %>
+    </div>
+  </div>
+</div>

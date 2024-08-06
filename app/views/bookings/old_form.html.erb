@@ -1,0 +1,17 @@
+
+<%= simple_form_for(@booking) do |f| %>
+
+  <div class="form-inputs">
+    <%= f.association :location %>
+    <%= f.input :start_date %>
+    <%= f.input :end_date %>
+    <%= f.input :client %>
+    <%= f.input :passport %>
+    <%= f.input :checkin_time %>
+    <%= f.input :checkout_time %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

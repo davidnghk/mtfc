@@ -1,0 +1,30 @@
+<% if @assignment.photos.count > 0 %>
+  <br/><br/>
+
+  <div class="row no-gutters">
+  	<% @assignment.photos.each do |photo| %>
+  	  <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2">
+  	    <div class="panel panel-default">
+  	      <div style="padding:0" class="panel-heading preview" >
+              <%#= link_to photo do %>
+              <%#= link_to image_tag(photo, width: 400 ), photo %>
+                <%#= image_tag photo.image, :style => "border: 1px solid;background-size: cover; "%>
+              <% end %>
+  	      </div>
+
+          <div class="panel-body">
+            <span class="pull-right">
+                <%= link_to photo, remote: true, method: :delete,
+                    data: {confirm: "Are your sure? "} do %>
+                      <i class="fa fa-trash-o" aria-hidden="true"></i>
+                    <% end %>
+            </span>
+          </div>
+
+          </body>
+  	    </div>
+  	  </div>
+  	<% end %>
+  </div>
+<% end %>
+

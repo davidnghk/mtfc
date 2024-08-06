@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%= render 'shared/favicon' %>
+    <%= render 'shared/head' %>
+  </head>
+
+  <body>
+    <%= render 'shared/navbar' %>
+    <%= render 'shared/message' %>
+    <%#= render 'shared/notices' %>
+
+    <% if current_user %>
+      <input type="hidden" id="user_id" value="<%= current_user.id %>">
+      <% Announcement.current(cookies.signed[:hidden_announcement_ids]).each do |announcement| %>
+          <% if ChatroomUser.member(announcement.business_unit_id, current_user.id) or 
+                announcement.business_unit_id.nil? %>
+            <%= div_for announcement do %>
+              <%= announcement.content %>
+              <%= link_to "hide announcement", hide_announcement_path(announcement), remote: true %>
+            <% end %>
+          <% end %>
+      <% end %>
+
+      <div class="w3-container " >
+        <div class="row">
+          <div class="col-md-3">
+             <%= render partial: "shared/sidebar" %>
+          </div>
+          <div class="col-md-9" >
+            <%= yield %>
+            <div id='remote_container'></div>
+          </div>
+        </div>
+      </div>
+    <% else %>
+     <%= yield %>
+    <% end %>
+
+    <% if !current_user  %> 
+      <%#= render 'shared/footer' %>
+    <% end %>
+
+  </body>
+</html>

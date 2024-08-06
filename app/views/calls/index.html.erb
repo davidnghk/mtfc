@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="panel panel-default">
+    <div class="panel-heading"><%= t('calls') %>    <%= link_to '<i class="fa fa-plus-circle fa-2x"></i>'.html_safe, new_call_path %></div>
+    <div class="panel-body">
+      <%= paginate @calls  %>
+      <table>
+        <thead>
+          <tr>
+            <th><%= t('user') %></th>
+            <th><%= t('booking_datetime') %></th>
+            <th><%= t('address') %></th>
+            <th><%= t('latitude') %></th>
+            <th><%= t('longitude') %></th>
+
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @calls.each do |call| %>
+            <tr data-link="<%= call_path(call) %>">
+              <td><%= call.user.name %></td>
+              <td><%= call.booking_datetime.strftime('%F %I:%M %P') %></td>
+              <td><%= call.address %></td>
+              <td><%= call.latitude %></td>
+              <td><%= call.longitude %></td>
+
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+    <br>
+
+</div>

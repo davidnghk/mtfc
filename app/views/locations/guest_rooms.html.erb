@@ -1,0 +1,75 @@
+
+<table id="guestrooms" class="table table-striped">
+
+  <thead>
+    <tr>
+      <th><%= t('room') %></th>
+      <th><%= t('model') %></th>
+      <th><%= t('category') %></th>
+      <th><%= t('acc') %> </th>
+      <th><%= t('bed') %> </th>
+      <th><%= t('area') %> </th>
+
+      <th><%= t('air') %> </th>
+      <th><%= t('wifi') %> </th>
+      <th><%= t('smoking') %> </th>
+      <th><%= t('condition') %></th>
+      <th><%= t('status') %></th>
+
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @guest_rooms.each do |location| %>
+      <tr>
+        <td><%= link_to location.code, location %></td>
+        <td><%= location.room.room_no %></td>
+        <td><%= location.room.category.display_name %></td>
+        <td><%= location.room.accomodate %></td>
+        <td><%= location.room.bed_type.display_name %></td>
+        <td><%= location.room.area %> </td>
+
+        <% if location.room.has_air %>
+          <td><%= '<i class="fa fa-thermometer "></i>'.html_safe %></td>
+        <% else %>
+          <td></td>
+        <% end %>
+        <% if location.room.has_wifi %>
+          <td><%= '<i class="fa fa-wifi "></i>'.html_safe %></td>
+        <% else %>
+          <td></td>
+        <% end %>
+
+        <td>
+          <% if location.room.read_attribute_before_type_cast(:smoking) == 0 %>
+            <i class="material-icons">smoke_free</i>
+          <% else %>
+            <i class="material-icons">smoking_rooms</i>
+          <% end %>
+        </td>
+
+          <% if location.read_attribute_before_type_cast(:condition) == 1 %>
+             <td><%= link_to '<i class="fa fa-thumbs-down fa-2x"></i>'.html_safe,  cleanup_location_path(location), method: :put %></td>
+           <% elsif location.read_attribute_before_type_cast(:condition) == 0 %>
+             <td><%= '<i class="fa fa-thumbs-up fa-2x"></i>'.html_safe %></td>
+           <% else %>
+             <td><i class="material-icons">delete_sweep</i></td>
+           <% end %>   
+
+          <% if (location.read_attribute_before_type_cast(:condition) == 0 &&
+                 location.read_attribute_before_type_cast(:status) == 0) or 
+                 ( location.read_attribute_before_type_cast(:status) == 1 ) %>
+             <td><%= link_to '<i class="fa fa-bed fa-2x"></i>'.html_safe, location_path(location), {style: "font-weight: bold; color: purple"} %>
+             </td>
+           <% else %>
+             <td><i class="material-icons"><%= room_status_icon(location.status) %> </i>
+             </td>
+           <% end %>   
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+

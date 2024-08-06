@@ -1,0 +1,51 @@
+<div class="container">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <%=  @defect.assignment.no %> <%=  @defect.assignment.work.display_name %> 
+    </div>
+    <div class="panel-body">
+      <%= simple_form_for(@defect, html: {multipart: true}) do |f| %>
+
+        <div class="form-inputs">
+          <%= f.hidden_field :assignment_id %>
+          <%= f.association :issue, :collection => Master.where("parent_id = ?", @defect.assignment.work) %>
+          <div class="row ">
+            <div  class="col-xs-4 col-md-6  ">
+              <%= f.input :item, label: t('model') %>
+            </div>
+            <div  class="col-xs-4 col-md-6  ">
+              <%= f.input :item_id, label: t('name') %>
+            </div>
+          </div>
+
+          <%= f.input :rating, as: :radio_buttons, collection: Defect.ratings.keys %>
+
+      <strong><%= t("accounts") %></strong> (User : Password)
+          <div class="container-fluid" style="border:1px solid #cecece;" ><br>
+            <%= f.fields_for :officers do |builder| %>
+               <%= render 'officer_fields', f: builder %> 
+            <% end %>
+            <%= link_to_add_fields '<i class="fa fa-plus-circle fa-2x"></i>'.html_safe, f, :officers %> 
+          </div><br>
+
+          <%= f.input :remarks, as: :text, :input_html => {:style => 'width: 100%', :rows => 3 } %>
+
+        </div>
+        <br><br><br>
+        
+        <div class="form-actions">
+          <%= button_tag type: 'submit', class: "button my-button", id: "register-button" do %>
+              <i class="fa fa-save fa-2x" aria-hidden="true"></i>
+          <% end %>
+        </div>
+      <% end %>
+
+          </div>
+          </div>
+           <%= link_to '<i class="fa fa-list-alt fa-2x"></i>'.html_safe,  @defect.assignment, data: { turbolinks: false } %>
+        </div>
+      </div>
+
+
+
+

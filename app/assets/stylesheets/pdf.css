@@ -1,0 +1,9 @@
+/* app/assets/stylesheets/pdf.scss */
+@import 'application';
+.overrideResponsive {
+  @include float-left;
+}
+
+.hideOnPdf {
+  display:none;
+}

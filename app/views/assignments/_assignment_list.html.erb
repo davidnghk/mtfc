@@ -1,0 +1,31 @@
+<%= paginate @assignments %>
+
+  <table  class="w3-table w3-striped">
+  <thead>
+    <tr>
+      <th><%= t('work') %></th>
+      <th><%= t('start_date') %></th>
+      <th><%= t('incharge') %></th>
+      <th><%= t('worker') %></th>
+      <th><%= t('status') %></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @assignments.each do |assignment| %>
+      <tr class="info" data-link="<%= assignment_path(assignment) %>">    
+          <td><%= assignment.no %>
+            <i class="material-icons"><%= assignment.work.icon %> </i><br>
+            <%= assignment.location_address %>
+          </td>
+
+        <td><%= assignment.start_datetime.strftime('%F %I:%M %P') if assignment.start_datetime? %></td>
+        <td><%= image_tag user_avatar(assignment.incharge_user, 25), class: "rounded-circle" %></td>
+        <td><%= image_tag user_avatar(assignment.worker_user, 25), class: "rounded-circle" %></td>
+        <td><i class="material-icons"><%= status_icon(assignment.aasm_state) %> </i> 
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+ 

@@ -1,0 +1,34 @@
+<div class="container">
+  <div class="panel panel-default">
+    <div class="panel-heading"><%= t('announcements') %></div>
+    <div class="panel-body">
+      <%= paginate @announcements %>
+      <table>
+      <thead>
+        <tr>
+          <th><%= t('start_at') %></th>
+          <th><%= t('end_at') %></th>
+          <th><%= t('business_unit') %></th>
+          <th><%= t('content') %></th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @announcements.each do |announcement| %>
+          <tr data-link="<%= announcement_path(announcement) %>">
+            <td><%= announcement.start_at.strftime('%F')  %></td>
+            <td><%= announcement.end_at.strftime('%F')  %></td>
+            <td><%= Chatroom.find(announcement.business_unit_id).display_name if announcement.business_unit_id? %></td>
+            <td><%= announcement.content %></td>
+          </tr>
+        <% end %>
+      </tbody>
+      </table>
+      <br>
+      <% if can? :create, Announcement %>
+        <%= link_to '<i class="fa fa-plus-circle fa-2x"></i>'.html_safe, new_announcement_path  %>
+      <% end %>
+    </div>
+  </div>
+</div>

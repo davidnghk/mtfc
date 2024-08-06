@@ -1,0 +1,58 @@
+ <div class="panel panel-default">
+  <div class="panel-heading">
+    <%= t('location') %>
+  </div>
+  <div class="panel-body">
+    <div class="container">
+
+      <%= simple_form_for(@location) do |f| %>
+
+        <div class="form-inputs">
+          <div class="row">
+            <div class="col-md-6 ">
+              <div class="form-group">
+                 <%= f.input :code %>
+              </div>
+            </div>
+            <div class="col-md-6 ">
+              <div class="form-group">
+                <%= f.association :parent %>
+              </div>
+            </div>
+          </div>
+
+         <div class="row">
+             <div class="col-md-6 ">
+              <div class="form-group">
+                <%= f.input :name %> 
+              </div>
+            </div>
+            <div class="col-md-6 ">
+              <div class="form-group">
+                <%= f.input :chi_name %>
+              </div>
+            </div>
+          </div>
+
+
+         <div class="row">
+             <div class="col-md-6 ">
+              <div class="form-group">
+              <%= f.association :category, :collection => Master.LocationType %>
+              </div>
+            </div>
+          </div>
+
+    <div class="form-actions">
+      <%= button_tag type: 'submit', class: "button my-button", id: "register-button" do %>
+          <i class="fa fa-save fa-2x" aria-hidden="true"></i>
+      <% end %>
+    </div>
+        <div><%= f.submit "Save", class: "btn btn-normal" %></div>
+
+      <% end %>
+
+    </div>
+  </div>
+</div>
+

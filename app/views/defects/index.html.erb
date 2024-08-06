@@ -1,0 +1,18 @@
+<h1>Defects</h1>
+
+<table class="responsive nowrap table table-hover" id="dttb-defects" data-sort="true" data-source="<%= url_for(format: :json)%>">
+  <thead>
+    <tr>
+      <th data-data="assignment">Assignment</th>
+      <th data-data="defect_id">Defect</th>
+      <th data-data="rating">Rating</th>
+      <th data-data="remarks">Remarks</th>
+      <th data-data="url" data-orderable="false" data-class-name="all" data-searchable="false" class="skip-export" width="100px"></th>
+    </tr>
+  </thead>
+
+</table>
+
+<br>
+
+<%= link_to 'New Defect', new_defect_path %>

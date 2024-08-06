@@ -1,0 +1,30 @@
+<% if !mobile_device?  %> 
+  <div class="calendar"></div>
+
+  <table>
+    <thead>
+      <tr>
+        <th><%= t('work') %></th>
+        <th><%= t('user') %></th>
+        <th><%= t('location') %></th>
+        <th><%= t('start_date') %></th>
+        <th><%= t('end_date') %></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @duties.each do |duty| %>
+        <tr>
+          <td><%= duty.work.display_name %></td>
+          <td><%= duty.user.username %></td>
+          <td><%= duty.location.display_name %></td>
+          <td><%= duty.start_date.strftime('%F %I:%M %P') if duty.start_date? %></td>
+          <td><%= duty.end_date.strftime('%F %I:%M %P') if duty.end_date? %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <br>
+
+  <% end %> 

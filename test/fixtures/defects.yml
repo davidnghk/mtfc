@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  assignment: one
+  defect_id: 1
+  rating: 1
+  remarks: MyString
+
+two:
+  assignment: two
+  defect_id: 1
+  rating: 1
+  remarks: MyString

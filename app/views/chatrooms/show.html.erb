@@ -1,0 +1,34 @@
+<div class="fluid-container" style="margin-top: 70px">
+
+    <div class="col-sm-12 " style=" bottom: 70px;">
+        <div class="panel panel-default">
+          <% if @chatroom.direct_message? %>
+            <div class="panel-heading"><%= @current_user.fullname %></div>
+          <% else %>
+            <div class="panel-heading"><%= @chatroom.display_name %></div>
+          <% end %>
+          <div class="panel-body">
+
+            <% unread_messages = false %>
+              <div data-behavior='messages' data-chatroom-id='<%= @chatroom.id %>'>
+              <% @messages.each do |message| %>
+                <%# if !unread_messages && @chatroom_user.last_read_at < message.created_at %>
+                <% if !unread_messages  %>
+                  <% unread_messages = true %>
+                  <div class="strike"><span>Unread Messages</span></div>
+                <% end %>
+                <div class='fixed-panel'>
+                <%= render message %>
+              </div>
+              <% end %>
+            </div>
+
+            <%= form_for [@chatroom, Message.new] do |f| %>
+              <%= f.text_area :body, rows: 1, class: "form-control", autofocus: true %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+</div>
+
+ 

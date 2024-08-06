@@ -1,0 +1,6 @@
+<h1><%= t('edit') %> <%= t('announcement') %></h1>
+
+<%= render 'form', announcement: @announcement %>
+
+<%= link_to '<i class="fa fa-edit fa-2x"></i>'.html_safe, @announcement %>  
+<%= link_to '<i class="fa fa-list-alt fa-2x"></i>'.html_safe,  announcements_path %>

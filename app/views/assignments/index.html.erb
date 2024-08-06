@@ -1,0 +1,115 @@
+  <% if params[:commit] == "Search" or params[:commit] == "Summary" or params[:commit] == "Report" %>
+      <%= render 'search' %>
+  <% else %> 
+
+    <% if mobile_device?  %> 
+      <div class="w3-bar" role="toolbar" aria-label="Toolbar with button groups">
+        <%= link_to t('assigned'), assignments_path(:aasm_state => "assigned"), data: { turbolinks: false }, class: "w3-bar-item w3-button w3-teal", style: "width:25.0%" %>  
+        <%= link_to t('acknowledged'),  assignments_path(:aasm_state => "acknowledged"), data: { turbolinks: false }, class: "w3-bar-item w3-button w3-teal", style: "width:25.0%"  %> 
+        <%= link_to t('working'),       assignments_path(:aasm_state => "working"), data: { turbolinks: false }, class: "w3-bar-item w3-button w3-teal", style: "width:25.0%" %>  
+        <%= link_to t('all'),     assignments_path, data: { turbolinks: false }, class: "w3-bar-item w3-button w3-teal ", style: "width:25.0%"  %>  
+      </div>
+    <% else %>
+      <div class="w3-bar" role="toolbar" aria-label="Toolbar with button groups">
+        <%= link_to t('booked'), assignments_path(:aasm_state => "booked"), data: { turbolinks: false }, class: "w3-bar-item w3-button w3-teal", style: "width:12.5%" %>  
+        <%= link_to t('quoted'), assignments_path(:aasm_state => "quoted"), data: { turbolinks: false }, class: "w3-bar-item w3-button w3-teal", style: "width:12.5%" %>  
+        <%= link_to t('assigned'), assignments_path(:aasm_state => "assigned"), data: { turbolinks: false }, class: "w3-bar-item w3-button w3-teal", style: "width:12.5%" %>  
+        <%= link_to t('acknowledged'),  assignments_path(:aasm_state => "acknowledged"), data: { turbolinks: false }, class: "w3-bar-item w3-button w3-teal", style: "width:12.5%"  %> 
+        <%= link_to t('working'),       assignments_path(:aasm_state => "working"), data: { turbolinks: false }, class: "w3-bar-item w3-button w3-teal", style: "width:12.5%" %>  
+        <%= link_to t('finished'),     assignments_path(:aasm_state => "finished"), data: { turbolinks: false }, class: "w3-bar-item w3-button w3-teal ", style: "width:12.5%"  %>
+        <%= link_to t('completed'),     assignments_path(:aasm_state => "completed"), data: { turbolinks: false }, class: "w3-bar-item w3-button w3-teal ", style: "width:12.5%"  %>  
+        <%= link_to t('all'),     assignments_path, data: { turbolinks: false }, class: "w3-bar-item w3-button w3-teal ", style: "width:12.5%"  %>  
+      </div>
+    <% end %>
+
+    <table  class="w3-table w3-striped">
+      <thead>
+        <% if !mobile_device?  %> 
+          <tr>
+            <th><%= t('work') %></th> 
+            <th><%= t('start_date') %></th>
+            <th><%= t('due_date') %></th>
+            <th><%= t('incharge') %></th>
+            <th><%= t('worker') %></th>
+            <th><%= t('status') %></th>        
+            <th><%= t('rating') %></th>
+            <% if false %>             %>
+            <th><%= t('BC') %></th>
+            <% end %>
+          </tr> 
+        <% end %>  
+      </thead>
+
+      <tbody>
+        <% if (@assignments != nil) then %>
+          <% @assignments.each do |assignment| %>
+            <tr data-link="<%= assignment_path(assignment) %>">
+
+            <% if mobile_device?  %> 
+              <td>
+                <%= assignment.no %> <i class="material-icons"><%= assignment.work.icon %> </i><br>
+                <%= assignment.location_address %>                
+              </td>
+             <td>
+                <%= assignment.start_datetime.strftime('%F') if assignment.start_datetime? %><br>
+                <%= assignment.due_datetime.strftime('%F') if assignment.due_datetime? %>
+              </td>
+              <td>
+                <% if assignment.incharge_user_id? %>
+                  <%= image_tag user_avatar(assignment.incharge_user, 25), class: "rounded-circle" %> 
+                <% end %>
+                <% if assignment.worker_user_id? %>
+                  <%= image_tag user_avatar(assignment.worker_user, 25), class: "rounded-circle" %> 
+                <% end %>              
+              </td>
+              <td>
+                <i class="material-icons"><%= status_icon(assignment.aasm_state) %> </i>
+              </td>
+            <% else %>
+              <td>
+                <%= assignment.no %>
+                <i class="material-icons"><%= assignment.work.icon %> </i><%= assignment.job_short %><br>
+                <%= assignment.location_address %>  
+              </td>  
+              <td><%= assignment.start_datetime.strftime('%F') if assignment.start_datetime? %></td>
+              <td><%= assignment.due_datetime.strftime('%F') if assignment.due_datetime? %></td>            
+              <td>
+                 <% if assignment.incharge_user_id? %>
+                  <%= image_tag user_avatar(assignment.incharge_user, 25), class: "rounded-circle" %> 
+                  <% end %>
+               </td> 
+               <td>
+                 <% if assignment.worker_user_id? %>
+                   <%= image_tag user_avatar(assignment.worker_user, 25), class: "rounded-circle" %> 
+                 <% end %>
+               </td>                          
+               <td><i class="material-icons"><%= status_icon(assignment.aasm_state) %> </i></td> 
+               <td><%= render_stars(assignment.star) if assignment.star? %>  </i>  </td>
+              <% if false %>  
+               <td><% if assignment.valid_block? %> 
+                    <%=  image_tag("bc-25.png") %>
+                   <% else %>
+                    <%= image_tag("bbc-25.png") %>
+                   <% end %>
+               </td>
+               <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+      </tbody>
+
+    </table>
+    <br>
+
+    <%= paginate @assignments %>
+
+<% if current_user.admin? %>
+  <h2><%= t('import') %></h2>
+
+  <%= form_tag import_assignments_path, multipart: true do %>
+    <%= file_field_tag :file %>
+    <%= submit_tag 'import' %>
+  <% end %>
+<% end %>
+
+<% end %>

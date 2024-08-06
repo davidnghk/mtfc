@@ -1,0 +1,12 @@
+<fieldset>
+  <div class="row">
+    <div class="col-xs-10 col-md-10 ">
+      <%= f.association :user, label: false %>
+    </div>
+    <div class="col-xs-2 col-md-2 ">
+      <%= f.hidden_field :_destroy %>
+        <%= link_to '<i class="fa fa-trash fa-2x"></i>'.html_safe, '#', class: "remove_fields" %>
+    </div>
+  </div>
+</fieldset>
+

@@ -1,0 +1,73 @@
+<p>
+  <strong>code:</strong>
+  <%= @room.room_no %>
+</p>
+
+<p>
+  <strong>Category:</strong>
+  <%= @room.category.display_name %>
+</p>
+
+<p>
+  <strong>Accomodate:</strong>
+  <%= @room.accomodate %>
+</p>
+
+<p>
+  <strong>Area:</strong>
+  <%= @room.area %>
+</p>
+
+<p>
+  <strong>Bed type:</strong>
+  <%= @room.bed_type.display_name %>
+</p>
+
+<p>
+  <strong>Bath room:</strong>
+  <%= @room.bath_room %>
+</p>
+
+<p>
+  <strong>Tv:</strong>
+  <%= @room.tv %>
+</p>
+
+<p>
+  <strong>Has kitchen:</strong>
+  <%= @room.has_kitchen %>
+
+</p>
+
+<p>
+  <strong>Has air:</strong>
+  <%= @room.has_air %>
+</p>
+
+<p>
+  <strong>Has intenet:</strong>
+  <%= @room.has_wifi %>
+</p>
+
+<p>
+  <strong>Smoking:</strong>
+  <%= @room.smoking %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @room.status %>
+</p>
+
+<p>
+  <strong>Condition:</strong>
+  <%= @room.condition %>
+</p>
+
+<%= link_to '<i class="fa fa-edit fa-2x"></i>'.html_safe,  edit_room_path(@room)  %>
+<%= link_to '<i class="fa fa-list-alt fa-2x"></i>'.html_safe,  rooms_path %>
+<%= link_to '<i class="fa fa-trash fa-2x"></i>'.html_safe,  @room, method: :delete, data: { confirm: 'Are you sure?' } %>
+
+
+
+

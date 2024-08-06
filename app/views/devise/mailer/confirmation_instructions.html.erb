@@ -1,0 +1,18 @@
+<p>Welcome <%= @email %>!</p>
+
+<p>You have signed up Micgtronics' fieldConnect syste. You can confirm your account email through the link below:</p>
+
+<p><%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token) %></p>
+
+If you have not signed up the system, Please ignore this message.
+
+
+
+
+Regards
+
+Administrator
+
+fieldConnect System
+
+email : admin@letsapp.biz

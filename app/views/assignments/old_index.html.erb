@@ -1,0 +1,42 @@
+
+<div class="container">
+  <div class="panel panel-default">
+    <div class="panel-heading"><%= t('assignment') %></div>
+    <div class="panel-body">
+      <%= paginate @assignments %><br/>
+
+      <table>
+        <thead>
+          <tr>
+            <th><%= t('location') %></th>
+            <th><%= t('work') %></th>
+            <th><%= t('start_date') %></th>
+            <th><%= t('incharge') %></th>
+            <th><%= t('status') %></th>
+            <th colspan="3"></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @assignments.each do |assignment| %>
+            <tr data-link="<%= assignment_path(assignment) %>">
+              <td><%= assignment.location.code %></td>
+              <% if assignment.work.code == 'HS' %>
+                <td><%= '<i class="fa fa-bed fa-2x"></i>'.html_safe %></td>
+              <% else %>
+                <td><%= '<i class="fa fa-info-circle fa-2x"></i>'.html_safe %></td>
+              <% end %>
+
+              <td><%= assignment.start_datetime.strftime('%H:%M %P') if assignment.start_datetime? %></td>
+              <td><%= image_tag user_avatar(assignment.incharge_user, 25), class: "rounded-circle" %></td>
+              <td><%= t(assignment.aasm_state)  %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <br>
+
+  <%= link_to '<i class="fa fa-plus-circle fa-2x"></i>'.html_safe, new_assignment_path %>
+</div>

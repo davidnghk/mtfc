@@ -1,0 +1,17 @@
+<div class="calendar"></div>
+
+<script>
+  window.duties = <%= raw @events.to_json %>
+  console.log(duties);
+
+  $('#calendar').fullCalendar({
+    header: {
+      left: 'title',
+      center: '',
+      right: 'prev,next'
+    },
+    defaultDate: $('#start-date').val(),
+  });
+
+
+</script> 

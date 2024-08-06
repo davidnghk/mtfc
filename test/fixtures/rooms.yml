@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  category_id: 1
+  location: one
+  accomodate: 1
+  area: 1
+  bed_type: 1
+  bath_room: 1
+  tv: 1
+  has_kitchen: false
+  has_air: false
+  has_intenet: false
+  status: 1
+  condition: 1
+
+two:
+  category_id: 1
+  location: two
+  accomodate: 1
+  area: 1
+  bed_type: 1
+  bath_room: 1
+  tv: 1
+  has_kitchen: false
+  has_air: false
+  has_intenet: false
+  status: 1
+  condition: 1

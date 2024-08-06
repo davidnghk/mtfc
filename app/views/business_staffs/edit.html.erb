@@ -1,0 +1,6 @@
+
+<%= render 'form', business_staff: @business_staff %>
+
+<%= link_to '<i class="fa fa-folder-open fa-2x"></i>'.html_safe, @business_staff %> | 
+<%= link_to '<i class="fa fa-list-alt fa-2x"></i>'.html_safe,  business_staffs_path, data: { turbolinks: false } %>
+<%= link_to '<i class="fa fa-trash fa-2x"></i>'.html_safe, @business_staff, method: :delete, data: { confirm: 'Are you sure?' } %>

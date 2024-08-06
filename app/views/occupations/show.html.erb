@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Location:</strong>
+  <%= @occupation.location %>
+</p>
+
+<p>
+  <strong>Checkin datetime:</strong>
+  <%= @occupation.checkin_datetime %>
+</p>
+
+<p>
+  <strong>Due date:</strong>
+  <%= @occupation.due_date %>
+</p>
+
+<p>
+  <strong>Checkout datetime:</strong>
+  <%= @occupation.checkout_datetime %>
+</p>
+
+<p>
+  <strong>Customer:</strong>
+  <%= @occupation.customer %>
+</p>
+
+<p>
+  <strong>Passport:</strong>
+  <%= @occupation.passport %>
+</p>
+
+<p>
+  <strong>Price:</strong>
+  <%= @occupation.price %>
+</p>
+
+<p>
+  <strong>Total:</strong>
+  <%= @occupation.total %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @occupation.status %>
+</p>
+
+<%= link_to 'Edit', edit_occupation_path(@occupation) %> |
+<%= link_to 'Back', occupations_path %>

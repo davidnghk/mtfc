@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  location: one
+  checkin_datetime: 2019-02-03 18:56:33
+  due_date: 2019-02-03
+  checkout_datetime: 2019-02-03 18:56:33
+  customer: MyString
+  passport: MyString
+  price: 1
+  total: 1
+  status: 1
+
+two:
+  location: two
+  checkin_datetime: 2019-02-03 18:56:33
+  due_date: 2019-02-03
+  checkout_datetime: 2019-02-03 18:56:33
+  customer: MyString
+  passport: MyString
+  price: 1
+  total: 1
+  status: 1

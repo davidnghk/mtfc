@@ -1,0 +1,284 @@
+<style>
+@media print {
+#scores {
+      page-break-before: always;
+    }
+}
+.break { page-break-before: always; }
+/* Header/Logo Title */
+.header {
+  padding: 20px;
+  text-align: right;
+  color: red;
+  border-bottom: 1px solid red;
+  margin: 1em 0;
+  padding: 0;
+  font-size: 20px;
+}
+h1 {
+    font-size: 25px;
+}
+h2 {
+    font-size: 18px;
+}
+h3 {
+    font-size: 16px;
+}
+p {
+    font-size: 15px;
+    line-height: 80%;
+}
+.space { margin-top: 1000px; }
+
+table, th, td {
+    table-layout: fixed;
+    border-spacing: 5px;
+    border: 1px solid black;
+    border-collapse: collapse;
+    font-size: 16px;
+    padding: 6px;
+    width:100%; 
+    padding-bottom: 6px;
+    line-height: 100%;
+}
+
+thead { display: table-header-group }
+tfoot { display: table-row-group }
+tr { page-break-inside: avoid }
+
+table#t01 {
+    padding: 5px;
+    padding-bottom: 5px;
+    width:88%; 
+    height:88%;
+    border: 0;
+}
+
+table#t02 {
+  table-layout: fixed;
+  height: 2000%; 
+  width: 100%;  
+}
+
+#table1, th, td {
+    table-layout: fixed;
+    border-spacing: 5px;
+    border-collapse: collapse;
+    font-size: 16px;
+    padding: 6px;
+    width:100%; 
+    padding-bottom: 6px;
+    line-height: 100%;
+}
+
+.noBorder {
+    border:none !important;
+    border: 0;
+}
+
+table2 {
+    table-layout: fixed;
+    border-spacing: 5px;
+    border-collapse: collapse;
+    font-size: 16px;
+    padding: 6px;
+    width:100%; 
+    padding-bottom: 6px;
+    line-height: 100%;
+    border: 0;
+} 
+
+.footer,
+.push {
+  height: 120px;
+}
+.page-break { display:block; clear:both; page-break-after:always; }
+</style>
+<html>
+<head>
+	<%= wicked_pdf_stylesheet_link_tag "pdf" %>
+</head>
+<body>
+
+<div class="header">
+      Mictronics
+</div>
+<div>
+  <center>
+      <p>Malfunction Summary Report </p>
+      <p>Inspection Date: <%= @first.start_datetime.strftime('%F') if @first.start_datetime %>
+        : <%= @last.start_datetime.strftime('%F') if @last.start_datetime %>
+      </p>
+  </center>
+</div>
+<br>
+ <table  >
+  <thead>
+      <tr>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <th>Item No</th>
+        <th colspan="4">Location</th>
+        <th colspan="3">Work</th>
+        <th colspan="2">Start Date</th>
+        <th colspan="2">status</th>
+      </tr>
+    <% ind = 1 %>
+    <% @assignments.each do |assignment| %>
+        <tr>
+          <td><%= ind %></td>
+          <td colspan="4"><%= assignment.location_address %></td>
+          <td colspan="3"><%= assignment.work.name %></td>
+          <td colspan="2"><%= assignment.start_datetime.strftime('%F') %></td>
+          <td colspan="2"><%= assignment.aasm_state %></td>
+        </tr>
+          <% ind = ind +1 %>
+    <% end %>
+  </tbody>
+ </table>
+ <br><br>
+
+ <table  >
+  <thead>
+  	  <tr>
+	  </tr>
+  </thead>
+  <tbody>
+  	  <tr>
+	    <th colspan="5">Location</th>
+	    <th colspan="3">Item</th>
+      <th>Status</th>
+	  </tr>
+	  <% @assignments.each do |assignment| %>
+	  	<% if assignment.defects.count > 0 %>
+		    <% assignment.defects.each do |defect| %>
+		      <tr>
+	            <td colspan="5"><%= assignment.location_address %> </td>
+		          <td colspan="3"><%= defect.issue.code %> <%= defect.issue.name %></td>
+		          <td><center><%= defect.rating %></center></td>
+	        </tr>
+		  	<% end %>
+      <% end %>
+	  <% end %>
+  </tbody>
+ </table>
+
+<% @assignments.each do |assignment| %>
+  <p style="page-break-before: always"></p>
+
+<div class="header">
+      Honeywell
+</div>
+  <center>
+      <p>Inspection Report </p>
+      <p>Inspection Date: <%= @first.start_datetime.strftime('%F') if @first.start_datetime %></p>
+  </center>
+
+  <table style="width:100%">
+    <thead>
+      <tr></tr>
+    </thead>
+    <tbody> 
+      <tr>
+        <td>Location: <%= assignment.location_address %></td>
+        <td>Date of Inspection: <%= assignment.start_datetime.strftime('%F') if assignment.start_datetime? %></td>
+      </tr>
+      <tr>
+        <td>Status: <%= assignment.aasm_state %></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <br>
+
+  <br>
+  <% @issues = Master.where("parent_id = ?", assignment.work_id) %>
+  <table class="noBorder" style="width:100%; line-height: 70%;">
+    <thead>
+      <tr>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td colspan="3">Item Type</td> 
+        <td colspan="2">Item ID</td>
+        <td colspan="2">Rating</td> 
+        <td colspan="3">Remarks</td>
+      </tr>      
+      <% @issues.each do |issue| %>
+
+        <% @items = Defect.where("assignment_id = ? and issue_id = ?", assignment.id, issue.id) %>
+        <% if @items.count == 0 %>
+            <tr>
+              <td colspan="3"><%= issue.name %></td> 
+              <td colspan="2"></td>
+              <td colspan="2"><%= issue.param_1 %></td> 
+              <td colspan="3"></td>
+            </tr>
+        <% else %>
+          <% @items.each do |item| %>
+            <tr>
+              <td colspan="3"><%= issue.name %></td> 
+              <td colspan="2"><%= item.item_id %></td>
+              <td colspan="2"><%= item.rating %></td> 
+              <td colspan="3"><%= item.remarks %></td>
+            </tr>
+          <% end %>
+        <% end %> 
+
+      <% end %> 
+    </tbody>
+  </table>
+
+   <% assignment.defects.each do |defect| %>
+      <br><br>
+      <strong><%= defect.issue.name %></strong><br>
+      <table class="noBorder" style="width:100%; line-height: 70%;">
+        <thead>
+          <tr>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td colspan="2"><strong>Model: </strong><%= defect.item if defect.item? %></td></tr>
+          <tr><td colspan="2"><strong>Name: </strong><%= defect.item_id if defect.item_id? %></td></tr>
+          <tr><td colspan="2"><strong>Status: </strong><%= defect.rating if defect.rating? %></td></tr>
+          <tr><td colspan="2"><strong>remarks: </strong><%= defect.remarks if defect.rating? %></td></tr>
+          <% if defect.officers.count > 0  %>
+            <tr><td colspan="2"><strong>Account and user password </strong></td></tr>
+            <% defect.officers.each do |officer| %>
+              <tr><td><%= officer.name if officer.name? %></td>
+                  <td><%= officer.passwd if officer.passwd? %></td></tr>
+            <% end %> 
+          <% end %> 
+<!--
+          <% if defect.before_photo? %>
+              <tr>
+                <td ><%= wicked_pdf_image_tag defect.before_photo.medium.url.gsub('https', 'http') if defect.before_photo? %><br>Before Image   <%= defect.photos.count %></td>
+                <td ><%= wicked_pdf_image_tag defect.after_photo.medium.url.gsub('https', 'http') if defect.after_photo? %><br>After Image</td>
+              </tr>
+          <% end %>
+-->
+          <% if defect.photos.count > 0 %>
+              <% photo_no = 1 %>
+              <% defect.photos.each do |photo| %>
+                <% if photo_no.odd? %>
+                  <tr>
+                <% end %>
+                <td>
+                <%= wicked_pdf_image_tag photo.image.medium.url.gsub('https', 'http') %>
+                </td>
+                <% if photo_no.even? %>
+                  <tr>
+                <% end %>
+               <% photo_no = photo_no + 1 %>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>    
+  <br>
+
+<% end %>

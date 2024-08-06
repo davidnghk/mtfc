@@ -1,0 +1,12 @@
+<div class="container">
+  <div class="panel panel-default">
+    <div class="panel-heading"><%= t('edit') %> <%= t('guardians') %></div>
+    <div class="panel-body"><br/>       
+
+        <%= render 'form', guardian: @guardian %>
+
+		<%= link_to '<i class="fa fa-search fa-2x"></i>'.html_safe, @guardian %> 
+		<%= link_to '<i class="fa fa-list-alt fa-2x"></i>'.html_safe, guardians_path, data: { turbolinks: false } %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    
+    <h2><%= @notification.recipient.name %> </h2>
+    <p>通知: <%= @notification.no %></p>
+    <%= link_to "通知", polymorphic_url(@notification.notifiable) %>
+
+    <div class="row">
+      <div class="col-md-3">
+          <% if @notification.user.avatar.attached? %>
+            <%= image_tag @notification.user.avatar.variant(resize: "100x100") %>
+          <% else %>
+            <%= gravatar_image_url(@notification.user.email, size: 100, :gravatar => { :secure => true } ) %>
+          <% end %>
+      </div>
+
+      <div class="col-md-9">
+         <p><%= @notification.notifiable.user.name %></p>
+         <p>170 CM    68 KG  Blood O-plus </p>
+         <p>Health Condition : High Blood Pressure </p>
+      </div>
+    </div>
+
+    <br>
+    <p><strong>呼叫:</strong>    <%= @notification.notifiable.id %> </p>
+    <p><strong>日期:</strong>    <%= @notification.created_at.strftime("%F %I:%M %P") %> </p>
+    <p><strong>詳情:</strong>    <%= @notification.content %> </p>
+    <p><strong>位置:</strong>    <%= @notification.notifiable.address %> </p>
+
+    <p>請盡快確認此通知。  </p>
+    <br>
+    <p>經理</p>
+ 
+    <br>
+  
+    <h2><%= @notification.recipient.name %> </h2>
+    <p>Notification: <%= @notification.no %></p>
+    <%= link_to "Notification", polymorphic_url(@notification.notifiable) %>
+  
+    <br>
+    <p><strong>Call:</strong>    <%= @notification.notifiable.id %> </p>
+    <p><strong>Notification date:</strong>    <%= @notification.created_at.strftime("%F %I:%M %P") %> </p>
+    <p><strong>Details:</strong>    <%= @notification.content %> </p>
+    <p><strong>Address:</strong>    <%= @notification.notifiable.address %> </p>
+
+    <p>Your early action on the notification is appreciated.</p>
+    <br>
+    <p>Regards</p>
+    <p>Manager</p>
+
+    <% if @notification.notifiable_type == 'Call' %>
+      <%= image_tag "https://maps.google.com/maps/api/staticmap?size=900x600&key=AIzaSyA9afljyyIF4GlEhb51-IqK-FH2i7IqJCg&language=zh-TW&sensor=false&zoom=16&markers=#{@notification.notifiable.latitude}%2C#{@notification.notifiable.longitude}" %>
+    <% end %>
+  </body>
+  
+</html>

@@ -1,0 +1,97 @@
+<% if user_masquerade? %>
+  <div class="alert alert-warning text-center">
+    You're logged in as <b><%= current_user.name %> (<%= current_user.email %>)</b>
+    <%= link_to back_masquerade_path(current_user) do %><%= icon("fas", "times") %> Logout <% end %>
+  </div>
+<% end %>
+
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+  <div class="container">
+    <% if user_signed_in? %> 
+      <%= link_to t('brand'), dashboard_path, data: { turbolinks: false }, class: "navbar-brand" %>
+
+              <%= link_to notifications_path, data: { turbolinks: false } do %>
+                <i class="fa fa-bell fa-2x icon-babu"></i>
+                <span class="badge" id="navbar_num_of_unread"><%= current_user.unread if current_user.unread > 0 %></span>
+              <% end %>
+ 
+    <% else %>
+      <%= link_to t('brand'), root_path, class: "navbar-brand" %>
+    <% end %>
+    <button class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarMain" aria-controls="navbarsExample04"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+ 
+    <div class="collapse navbar-collapse" id="navbarMain">
+      <ul class="navbar-nav mr-auto mt-2 mt-md-0">
+      </ul>
+
+      <ul class="navbar-nav">
+
+        <li class="nav-item"><%#= link_to "What's New", announcements_path, class: "nav-link #{unread_announcements(current_user)}" %></li>
+        <% if user_signed_in? %>
+
+          <% if current_user.admin? %>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <%= t('admin') %> 
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a><%= link_to t('authorization'), users_path, data: { turbolinks: false }, class: "dropdown-item" %></a>
+                <a><%= link_to t('code'), master_path(id: 1), data: { turbolinks: false }, class: "dropdown-item" %></a>
+                <a><%= link_to t('location'), location_path(id: 1), data: { turbolinks: false }, class: "dropdown-item" %></a>
+                <a><%= link_to t('workflow'), workflows_path, data: { turbolinks: false }, class: "dropdown-item" %></a>
+                <a><%#= link_to t('guardian'), guardians_path, data: { turbolinks: false }, 
+                    class: "dropdown-item" %></a>
+                <a><%#= link_to t('call'), calls_path, data: { turbolinks: false }, class: "dropdown-item" %></a>  
+                <a><%#= link_to t('room'), rooms_path, data: { turbolinks: false }, class: "dropdown-item" %></a>
+                <a><%#= link_to t('business_staffs'), business_staffs_path, data: { turbolinks: false }, class: "dropdown-item" %></a>
+                <a><%= link_to t('announcements'), announcements_path, data: { turbolinks: false }, class: "dropdown-item" %></a>
+              </div>
+            </li>
+          <% end %>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <%= t('assignment') %> 
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">     
+              <a><%= link_to t('new_assignment'), new_assignment_path, class: "dropdown-item" %></a>
+              <a><%= link_to t('assignments'), assignments_path(aasm_state: "booked"), data: { turbolinks: false }, class: "dropdown-item" %></a> 
+              <a><%#= link_to t('duty'), duties_path, class: "dropdown-item" %></a>
+              <a><%= link_to t('schedule'), assignment_calendar_path, class: "dropdown-item" %></a>
+              <% if current_user.admin? or current_user.manager? %>
+                <a><%= link_to t('search'), assignments_path(:commit => "Search"), data: { turbolinks: false },class: "dropdown-item" %></a>
+              <% end %>
+            </div>
+          </li>
+
+          <li class="nav-item dropdown">
+            <%= link_to "#", id: "navbar-dropdown", class: "nav-link dropdown-toggle",
+                data: { toggle: "dropdown" }, aria: { haspopup: true, expanded: false } do %>
+              <%= image_tag user_avatar(current_user, 25), class: "rounded-circle" %>
+            <% end %>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-dropdown">
+              <%= link_to t("settings"), edit_user_registration_path, class: "dropdown-item" %>
+              <%= link_to t("chatroom"), chatrooms_path, class: "dropdown-item" %>
+              <div class="dropdown-divider"></div>
+              <%= link_to t("signout"), destroy_user_session_path, method: :delete, class: "dropdown-item" %>
+              <%= link_to t('help') , help_path, class: "dropdown-item"  %>
+            </div>
+          </li>
+        <% else %>
+          <li class="nav-item"><%= link_to t("signin"), new_user_session_path, class: "nav-link" %></li>
+        <% end %>
+        <% if I18n.locale == :zh %> 
+            <li><%= link_to image_tag("hk.png") , url_for( :locale => 'en' ), class: "nav-link"  %></li>    
+        <% else %>
+            <li><%= link_to image_tag("us.png") , url_for( :locale => 'zh' ), class: "nav-link"  %></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</nav>

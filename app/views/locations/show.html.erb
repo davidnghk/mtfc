@@ -1,0 +1,58 @@
+<div class="container">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+    	<% if @location.parent_id?  %>
+ 	    	<%= @location.parent.display_name %> 
+    	<% else %> 
+    	    <%= t('location')   %> 
+    	<% end %>
+    </div>
+    <div class="panel-body">
+    	<br>
+		<p><strong><%= t('code') %>: </strong><%= @location.code %></p>
+		<p><strong><%= t('name') %>: </strong><%= @location.name %></p>
+		<p><strong><%= t('chi_name') %>: </strong><%= @location.chi_name %></p>
+		<p><strong><%= t('category') %>: </strong><%= @location.category.display_name if @location.category_id %></p>
+
+		<%= link_to '<i class="fa fa-edit fa-2x"></i>'.html_safe, edit_location_path(@location), data: { turbolinks: false }  %>  
+		<%= link_to '<i class="fa fa-list-alt fa-2x"></i>'.html_safe,  locations_path, data: { turbolinks: false } %>
+		<%= link_to '<i class="fa fa-level-down fa-2x"></i>'.html_safe, new_location_path(:parent_id => @location.id), data: { turbolinks: false }  %>
+		<%= link_to '<i class="fa fa-level-up fa-2x" style="color:blue"></i>'.html_safe,  @location.parent, data: { turbolinks: false } if @location.parent_id? %>
+
+
+		<h2><%= t('import') %></h2>
+
+		<%= form_tag import_locations_path, multipart: true do %>
+		  <%= file_field_tag :file %>
+		  <%= submit_tag "Import" %>
+		<% end %>
+
+		<table class="table table-striped">
+		  <thead>
+		    <tr>
+		      <th><%= t('code') %></th>
+		      <th><%= t('name') %></th>
+		      <th><%= t('chi_name') %></th>
+
+		      <th></th>
+		    </tr>
+		  </thead> 
+
+		  <tbody>
+		    <% @location.children.each do |location| %>
+		      <tr data-link="<%= location_path(location) %>">
+		        <td><%= location.code %></td>
+		        <td><%= location.name %></td>
+		        <td><%= location.chi_name %></td>
+
+		        <td><%= link_to '<i class="fa fa-trash fa-2x"></i>'.html_safe, location, method: :delete, data: {confirm: "Are your sure? "}  %>
+		        </td>
+
+		      </tr>
+		    <% end %>
+		  </tbody>
+		</table>
+
+		</div>
+	</div>
+</div>

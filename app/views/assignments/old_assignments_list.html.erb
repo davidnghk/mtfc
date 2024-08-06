@@ -1,0 +1,22 @@
+<% assignments.each do |assignment| %>
+    <div class="col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-heading preview">
+        <% if assignment.work.code == 'HS' %>
+          <%= '<i class="fa fa-bed fa-2x"></i>'.html_safe %>
+        <% else %>
+          <%= '<i class="fa fa-info-circle fa-2x"></i>'.html_safe %>
+        <% end %> 
+        <%= assignment.location.code %>
+
+        </div>
+        <div class="panel-body">
+          <%= link_to assignment.incharge_user.name,   assignment %><br/>
+          <div>
+            <%= assignment.start_datetime.strftime('%F %H:%M %P') if assignment.start_datetime? %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<% end %>

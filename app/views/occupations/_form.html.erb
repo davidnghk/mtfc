@@ -1,0 +1,70 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <span><i class="fa fa-bolt" style="color: #ffb400"></i> $150</span>
+    <span class="pull-right">每天</span>
+  </div>
+  <div class="panel-body">
+    <%= form_for([@location, @location.occupations.new]) do |f| %>
+      <div class="row">
+        <div class="col-md-9">
+          <%= f.text_field :due_date, readonly: true, placeholder: "結帳日", class: "form-control datepicker" %>
+        </div>
+      </div>
+      <div>
+          <%= f.text_field :customer, placeholder: "顧客姓名", class: "form-control " %>
+          <%= f.text_field :passport, placeholder: "護照身份證號碼", class: "form-control " %>
+      </div>
+
+      <h4 class="message-alert text-center"><span id="message"></span></h4>
+      <div id="preview" style="display: none" >
+        <table class="reservation-table">
+          <tbody>
+            <tr>
+              <td>價錢</td><td class="text-right">$150</td>
+            </tr>
+            <tr>
+              <td>天數</td><td class="text-right">x <span id="occupation_days"></span></td>
+            </tr>
+            <tr>
+              <td class="total">總額</td><td class="text-right">$<span id="occupation_total"></span></td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+        <%= f.submit "登記", id: "btn_checkin", class: "btn btn btn-normal btn-default", disabled: true %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<script>
+  function checkDate(date) {
+    dmy = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
+    return [$.inArray(dmy, unavailableDates) == -1];
+  }
+
+  $(function()  {
+    $('#occupation_due_date').datepicker({
+        dateFormat: 'dd-mm-yy',
+        minDate: 1,
+        maxDate: '3m',
+        onSelect: function(selected) {
+            $('#message').text("");
+            $('#preview').show();
+            $('#btn_checkin').attr('disabled', false);
+
+            var checkout_date = $('#occupation_due_date').datepicker('getDate');
+            var today = new Date() 
+            var days = Math.ceil((checkout_date - today)/1000/60/60/24) ;
+            var total = days * 150 ;
+
+            $('#occupation_days').text(days);
+            $('#occupation_total').text(total);
+        }
+    });
+  });
+</script>
+
+

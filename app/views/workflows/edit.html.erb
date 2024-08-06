@@ -1,0 +1,6 @@
+<h1><%= t('edit') %><%= t('workflow') %></h1>
+
+<%= render 'form', workflow: @workflow %>
+
+<%= link_to '<i class="fa fa-edit fa-2x"></i>'.html_safe, @workflow  %> 
+<%= link_to '<i class="fa fa-list-alt fa-2x"></i>'.html_safe,  workflows_path %>

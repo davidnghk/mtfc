@@ -1,0 +1,36 @@
+<%= paginate @assignments %>
+
+  <table  class="w3-table w3-striped">
+  <thead>
+  </thead>
+
+  <tbody>
+    <% @assignments.each do |assignment| %>
+      <tr class="info" data-link="<%= assignment_path(assignment) %>">    
+          <td><%= assignment.no %> 
+            <i class="material-icons"><%= assignment.work.icon %> </i>
+            <% if !mobile_device?  %> 
+                </i><%= assignment.job %>
+            <% end %>
+            <br/>
+            <%= assignment.location_address %>
+        </td>
+        
+        <td>
+          <%= assignment.start_datetime.strftime('%F %I:%M %P') if assignment.start_datetime? %>
+          <%= image_tag user_avatar(assignment.incharge_user, 25), class: "rounded-circle" %>
+          <br>
+          <% if assignment.end_datetime? %>
+            <%= assignment.end_datetime.strftime('%F %I:%M %P') if assignment.end_datetime? %>
+          <% else %>
+             <%= assignment.due_datetime.strftime('%F %I:%M %P') if assignment.due_datetime? %>
+          <% end %>
+          <%= image_tag user_avatar(assignment.worker_user, 25), class: "rounded-circle" %>
+          <i class="material-icons"><%= status_icon(assignment.aasm_state) %> </i>
+          <br/> 
+          <%= render_stars(assignment.star) if assignment.star? %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

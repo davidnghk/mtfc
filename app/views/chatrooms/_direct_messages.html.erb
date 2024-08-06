@@ -1,0 +1,17 @@
+      <table>
+        <thead>
+          <tr>
+            <th><%= t('conversation') %></th>
+            <th colspan="3"></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @chatrooms.direct_messages.each do |chatroom| %>
+            <tr>
+              <td><%= chatroom.name %></td>
+              <td><%= link_to '<i class="fa fa-trash fa-2x"></i>'.html_safe, chatroom, method: :delete, data: { confirm: 'Are you sure?' }  %> </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>

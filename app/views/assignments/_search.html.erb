@@ -1,0 +1,155 @@
+<%= search_form_for @search do |f| %>
+ 
+  <div class="row">
+    <div class="col-md-2"><%= t('start_datetime') %></div>
+    <div class="col-md-4"><%= f.text_field :start_datetime_gteq, :size=>"10", readonly: true %> : 
+      <%= f.text_field :start_datetime_lteq, :size=>"10", readonly: true %></div>
+    <div class="col-md-2"><%= t('due_date') %></div>
+    <div class="col-md-4"><%= f.text_field :due_datetime_gteq, :size=>"10", readonly: true %> : <%= f.text_field :due_datetime_lteq, :size=>"10", readonly: true %></div>
+  </div>
+ 
+  <div class="row">
+    <div class="col-md-2"><%= t('address') %></div>
+    <div class="col-md-4"><%= f.search_field :address_cont %></div>
+    <div class="col-md-2"><%= t('work_no') %></div>
+    <div class="col-md-4"><%= f.search_field :no_eq %></div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-2"><%= t('incharge') %></div>
+    <div class="col-md-4"><%= f.select :incharge_user_id_eq, options_from_collection_for_select(User.all,  "id", "username", @search.incharge_user_id_eq), include_blank: true  %></div>
+    <div class="col-md-2"><%= t('worker') %></div>
+    <div class="col-md-4"><%= f.select :worker_user_id_eq, options_from_collection_for_select(User.all,  "id", "username", @search.worker_user_id_eq), include_blank: true  %></div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-2"><%= t('work') %></div>
+    <div class="col-md-4"><%= f.select :work_id_eq, options_from_collection_for_select(Master.work,  "id", "name", @search.work_id_eq), include_blank: true  %></div>
+    <div class="col-md-2"><%= t('location') %></div>
+    <div class="col-md-4"><%= f.select :location_id_eq, options_from_collection_for_select(Location.all,  "id", "name", @search.location_id_eq), include_blank: true  %></div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-2"><%= t('status') %></div>
+    <div class="col-md-4"> <%= f.select  :aasm_state_eq, 
+    options_for_select([
+        [],
+        ['acknowledged'],
+        ['assigned'],
+        ['cancelled'],
+        ['completed'],
+        ['finished'],
+        ['ordered'],
+        ['rejected'],
+        ['working']
+      ], @search.aasm_state_eq)
+       %></div>
+  </div>
+
+ <br>
+
+  <div class="actions"><%= f.submit 'Search' %> 
+    <% if @count > 0  %>
+      <%#= f.submit 'Summary' %> <%= f.submit 'Report' %>
+    <% end %>      
+    </div>
+<% end %>
+
+<% if @assignments.where(" latitude is not null").count > 0  %>
+  <div id="map" style="width: 100%; height: 100%"></div>
+<% end %>
+  <table  class="w3-table w3-striped">
+    <thead>
+      <% if !mobile_device?  %> 
+        <tr>
+          <th><%= t('work_no') %></th> 
+          <th><%= t('work') %></th> 
+          <th><%= t('start_date') %></th>
+          <th><%= t('due_date') %></th>
+          <th><%= t('incharge') %></th>
+          <th><%= t('worker') %></th>
+          <th><%= t('status') %></th>        
+          <th><%= t('rating') %></th>
+        </tr> 
+      <% end %>  
+    </thead>
+
+    <tbody>
+      <% if (@assignments != nil) then %>
+        <% @assignments.each do |assignment| %>
+          <tr data-link="<%= assignment_path(assignment) %>">
+
+          <% if !mobile_device?  %> 
+            <td><%= assignment.no %></td>
+          <% end %>
+
+          <td>
+            <i class="material-icons"><%= assignment.work.icon %> </i>
+            <% if !mobile_device?  %> 
+                </i><%= assignment.job %><br>
+                <%= assignment.location_address %>
+            <% else %>
+              </i><%= assignment.job_short %>
+            <% end %>
+          </td>
+
+          <% if !mobile_device?  %> 
+            <td><%= assignment.start_datetime.strftime('%m-%d %k:%M') if assignment.start_datetime? %></td>
+            <td><%= assignment.due_datetime.strftime('%m-%d %k:%M') if assignment.due_datetime? %></td>
+          <% else %>
+            <td>
+              <%= assignment.start_datetime.strftime('%m-%d %k:%M') if assignment.start_datetime? %><br>
+              <%= assignment.due_datetime.strftime('%m-%d %k:%M') if assignment.due_datetime? %></td>
+          <% end %>
+
+          <td>
+            <% if assignment.incharge_user_id? %>
+              <%= image_tag user_avatar(assignment.incharge_user, 25), class: "rounded-circle" %> 
+              <% end %>
+          <% if !mobile_device?  %> 
+            </td>
+            <td>
+          <% end %>
+            <% if assignment.worker_user_id? %>
+              <%= image_tag user_avatar(assignment.worker_user, 25), class: "rounded-circle" %> 
+            <% end %>
+          <% if !mobile_device?  %> 
+            </td>
+            <td>
+          <% end %>
+            <i class="material-icons"><%= status_icon(assignment.aasm_state) %> </i>  </td>
+          <td><%= render_stars(assignment.star) if assignment.star? %>  </i>  </td>
+        </tr>
+      <% end %>    
+
+      <% end %>
+    </tbody>
+
+  </table>
+  <br>
+
+<script>
+  function initialize() {
+    var location = {lat: 22.233, lng: 114.191}
+
+
+    var map = new google.maps.Map(document.getElementById('map'), {
+      center: location,
+      zoom: 12.5
+    });
+
+    <% @assignments.each do |assignment| %>
+      <% if assignment.latitude.present? %>
+        new google.maps.Marker({
+          position: {lat: <%= assignment.latitude %>, lng: <%= assignment.longitude %> },
+          map: map
+        })
+      <% end %> 
+    <% end %>
+
+  }
+
+  google.maps.event.addDomListener(window, 'load', initialize);
+
+</script>
+

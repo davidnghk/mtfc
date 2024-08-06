@@ -1,0 +1,31 @@
+#default: &default
+#  adapter: sqlite3
+#  pool: 15
+#  timeout: 5000
+
+#development:
+#  <<: *default
+#  database: db/development.sqlite3
+
+default: &default
+  adapter: mysql2
+  encoding: utf8
+  username: root
+  password: <%= ENV['MYSQL_PASSWORD'] %>
+#  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+#  socket: /var/run/mysqld/mysqld.sock
+  host: 35.185.128.127
+#  host: 104.199.252.193
+  port: 3306
+
+development:
+  <<: *default
+  database: hwfc
+
+test:
+  <<: *default
+  database: hwfc
+
+production:
+  <<: *default
+  database: hwfc

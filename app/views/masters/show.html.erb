@@ -1,0 +1,54 @@
+<div class="container">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+    	<% if @master.parent_id?  %>
+ 	    	<%= @master.parent.display_name %> 
+    	<% else %> 
+    	    <%= t('code')   %> 
+    	<% end %>
+    </div>
+    <div class="panel-body">
+    	<br>
+		<p><strong><%= t('code') %>: </strong><%= @master.code %></p>
+		<p><strong><%= t('name') %>: </strong><%= @master.name %></p>
+		<p><strong><%= t('chi_name') %>: </strong><%= @master.chi_name %></p>
+		<p><strong><%= t('icon') %>: </strong><%= @master.icon %></p>
+		<p><strong><%= t('workflow') %>: </strong><%= @master.setting1 %></p>
+
+		<%= link_to '<i class="fa fa-edit fa-2x"></i>'.html_safe, edit_master_path(@master), data: { turbolinks: false }  %>  
+		<%= link_to '<i class="fa fa-list-alt fa-2x"></i>'.html_safe,  masters_path, data: { turbolinks: false } %>
+		<%= link_to '<i class="fa fa-level-down fa-2x"></i>'.html_safe, new_master_path(:parent_id => @master.id), data: { turbolinks: false }  %>
+		<%= link_to '<i class="fa fa-level-up fa-2x" style="color:blue"></i>'.html_safe,  @master.parent, data: { turbolinks: false } if @master.parent_id? %>
+
+
+		<table class="table table-striped">
+		  <thead>
+		    <tr>
+		      <th><%= t('code') %></th>
+		      <th><%= t('name') %></th>
+		      <th><%= t('chi_name') %></th>
+		      <th><%= t('icon') %></th>
+		      <th><%= t('workflow') %></th>
+		      <th></th>
+		    </tr>
+		  </thead> 
+
+		  <tbody>
+		    <% @master.children.each do |master| %>
+		      <tr data-link="<%= master_path(master) %>">
+		        <td><%= master.code %></td>
+		        <td><%= master.name %></td>
+		        <td><%= master.chi_name %></td>
+		        <td><%= master.icon %></td>
+		        <td><%= master.setting1  %></td>
+		        <td><%= link_to '<i class="fa fa-trash fa-2x"></i>'.html_safe, master, method: :delete, data: {confirm: "Are your sure? "}  %>
+		        </td>
+
+		      </tr>
+		    <% end %>
+		  </tbody>
+		</table>
+
+		</div>
+	</div>
+</div>

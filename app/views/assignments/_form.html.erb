@@ -1,0 +1,108 @@
+
+<div class="container">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <% if @assignment.parent_id? %>
+        <%= @assignment.parent.display_name %> : <%= t('sub_assignment') %>
+      <% else %>
+        <%= t('assignment') %>
+      <% end %>
+      </div>
+    <div class="panel-body">
+      <%= simple_form_for(@assignment) do |f| %>
+        <%= f.hidden_field :parent_id %>
+        <%= f.input_field :date_range, as: :hidden, :value => nil  %>
+
+        <div class="form-inputs">
+          <div class="row ">
+            <div class="col-xs-6 col-md-6  ">
+              <%= f.association :work, :collection => Master.work %>
+            </div>
+            <div class="col-xs-6 col-md-6  ">
+              <%= f.input :user_ref %>
+            </div>
+          </div>
+
+          <div class="row ">
+            <div class="col-xs-6 col-md-6  ">
+              <%= f.association :location %>
+            </div>
+            <div  class="col-xs-6 col-md-6  ">
+              <%= f.input :address %>
+            </div>
+          </div>
+
+          <div class="row ">
+            <div class="col-xs-12 col-md-12  ">
+              <%= f.association :contractor, :collection => Chatroom.contractor %>
+            </div>
+          </div>
+
+          <div class="row ">
+            <div  class="col-xs-6 col-md-6  ">
+              <%= f.input :start_datetime, as: :datetime, html5: true %>
+            </div>
+            <div  class="col-xs-6 col-md-6  ">
+              <%= f.input :end_datetime, as: :datetime, html5: true %>
+            </div>
+          </div>
+ 
+          <div class="row ">
+            <div class="col-xs-4 col-md-4  ">
+              <%= f.association :incharge_user %>
+            </div>
+            <div class="col-xs-4 col-md-4  ">
+              <%= f.association :worker_user %>
+            </div>
+            <div  class="col-xs-4 col-md-4  ">
+              <%= f.input :due_datetime, as: :date, html5: true %>
+            </div>
+          </div>
+
+           <div class="row ">
+            <div class="col s12  ">
+              <%= f.input :remarks, as: :text, input_html: {rows: 3, cols: 40}  %>
+            </div>
+          </div>
+
+          <div class="row ">
+            <div  class="col-xs-4 col-md-4  ">
+              <%= f.input :reported, as: :radio_buttons %>
+            </div>
+            <div  class="col-xs-8 col-md-8  ">
+              <%= f.input :followup  %>
+            </div>
+          </div>
+
+        </div>
+        <br/>
+        <div class="form-actions">
+          <% if mobile_device?  %> 
+            <%= button_tag type: 'submit', class: "button my-button", id: "register-button" do %>
+              <i class="fa fa-save fa-3x" aria-hidden="true"></i>
+            <% end %> 
+          <% else %>
+            <%= button_tag type: 'submit', class: "button my-button", id: "register-button" do %>
+              <i class="fa fa-save fa-2x" aria-hidden="true"></i>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+
+  <% if mobile_device?  %> 
+    <%= link_to '<i class="fa fa-list-alt fa-3x"></i>'.html_safe,  assignments_path %>
+    <% if @assignment.persisted? %>
+      <%= link_to '<i class="fa fa-edit fa-3x"></i>'.html_safe, edit_assignment_path(@assignment) %> 
+    <% end %>
+  <% else %>
+    <%= link_to '<i class="fa fa-list-alt fa-2x"></i>'.html_safe,  assignments_path %>
+    <% if @assignment.persisted? %>
+      <%= link_to '<i class="fa fa-edit fa-2x"></i>'.html_safe, edit_assignment_path(@assignment) %> 
+    <% end %>
+  <% end %>
+
+    </div>
+    </div>
+  </div>
+</div>
+<br>

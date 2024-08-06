@@ -1,0 +1,38 @@
+<% if @photos.count > 0 %>
+  <br/><br/>
+
+  <div class="row no-gutters">
+  	<% @photos.each do |photo| %>
+  	  <div class="col-xs-6 col-sm-4 col-md-4 col-lg-3">
+  	    <div class="panel panel-default">
+  	      <div style="padding:0" class="panel-heading preview" >
+              <%= link_to "#photo_#{photo.id}" do %>
+                <%= image_tag photo.image.url(), :style => "border: 1px solid;background-size: cover; "%>
+              <% end %>
+  	      </div>
+
+          <div class="panel-body">
+            <% if photo.latitude? %>
+              <span  style="text-indent: 1em;" >
+              <%= link_to  "http://maps.google.com/maps/api/staticmap?size=900x600&key=AIzaSyA9afljyyIF4GlEhb51-IqK-FH2i7IqJCg&language=zh-TW&sensor=false&zoom=18&markers=#{photo.latitude}%2C#{photo.longitude}" do %>
+                  <i class="fa fa-map-marker" aria-hidden="true"></i>
+                <% end %>
+              </span>
+            <% end %>
+            <%= photo.photo_datetime.strftime('%F %H:%M') if photo.photo_datetime? %>
+            <span class="pull-right">
+              <% if photo.photoable_type == "Defect" %>
+                <%= link_to defect_photo_path(photo.photoable_id, photo.id), remote: true, method: :delete,
+                    data: {confirm: "Are your sure? "} do %>
+                      <i class="fa fa-trash-o" aria-hidden="true"></i>
+                    <% end %>
+              <% end %>
+            </span>
+          </div>
+
+          </body>
+  	    </div>
+  	  </div>
+  	<% end %>
+  </div>
+<% end %>

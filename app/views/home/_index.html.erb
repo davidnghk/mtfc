@@ -1,0 +1,71 @@
+ <!-- Header -->
+<header id="top" class="header">
+  <div class="container">
+      <div class="row">
+          <div class="col-lg-12 col-lg-offset-1 text-center">
+     
+           <br><br><br><br><br><br><br><br><br><br><br>           
+           <% if user_signed_in? %>
+             <%= link_to t("workflow"), "https://youtu.be/pTwgYwqEZS4",  class: "w3-button w3-green" %>
+             <%  if (I18n.locale == :zh) %>
+                <%= link_to "地理數據商業智能", "https://youtu.be/W2pGx7aRqeg", class: "w3-button w3-green" %>
+                <%= link_to t("安全行流程"), "https://youtu.be/Im50A50X5G0", class: "w3-button w3-green" %>
+             <% else %> 
+                <%= link_to "Geo-data BI", "https://youtu.be/L2F8colehFc", class: "w3-button w3-green" %>
+                <%= link_to t("Inspection"), "https://youtu.be/gFugbcTVkcE", class: "w3-button w3-green" %>
+             <% end %>
+          <% end %>
+           <br><br>
+           <% if !mobile_device? %>
+              <br><br><br><br><br><br>
+           <% end %>
+          <style>
+          .w3-lobster {
+            font-family: "Lobster", serif;
+          }
+          </style>
+          <body>
+
+          <div class="w3-container w3-lobster">
+            <p class="w3-lobster w3-xlarge w3-text-black">Team up with staff</p>
+            <p class="w3-lobster w3-xlarge w3-text-black">Manage your tasks</p>
+          </div>
+
+           <br>
+            <% if !user_signed_in? %>
+              <%= link_to t("sign_in"), new_user_session_path, class: "w3-button w3-blue w3-round-xlarge" %>
+            <% else %>
+              <% if mobile_device? %>
+                <div class="col-xs-4 col-md-4 ">
+                  <%= link_to assignments_path  do %>
+                    <i class="glyphicon glyphicon-inbox btn btn-primary btn-circle-lg  "></i> 
+                  <% end %>
+                  <br><small> <%= t("today_order") %> </small>
+                </div>
+            <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</header>
+
+<% if !mobile_device? %>
+  <!-- Page Content -->
+
+  <!-- Footer -->
+  <footer>
+      <div class="container">
+          <div class="row">
+              <div class="col-lg-10 col-lg-offset-1 text-center">
+                  <h4><strong>Letsapp Limited<strong></h4>
+                <p>Level 4, Core E, Cyberport 3<br>100 Cyberport Road, Hong Kong</p>
+                  <ul class="list-unstyled">
+                      <li><i class="fa fa-phone fa-fw"></i> (852) 52254679</li>
+                      <li><i class="fa fa-envelope-o fa-fw"></i>  <a href="mailto:info@letswebapp.com">info@letswebapp.com</a>
+                      </li>
+                  </ul>
+              </div>
+          </div>
+      </div>
+  </footer>
+<% end %>

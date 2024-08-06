@@ -1,0 +1,16 @@
+<p><strong><%= t('work') %>: </strong>
+	<% if @workflow.work.code == 'HS' %>
+          <td><%= '<i class="fa fa-bed fa-2x"></i>'.html_safe %></td>
+        <% else %>
+          <td><%= '<i class="fa fa-info-circle fa-2x"></i>'.html_safe %></td>
+        <% end %>
+    <%= @workflow.work.name %></p>
+
+<p><strong><%= t('location') %>: </strong><%= @workflow.location.display_name %></p>
+<p><strong><%= t('incharge') %>: </strong>
+	<%= image_tag user_avatar(@workflow.business_unit.incharge_user, 25), class: "rounded-circle" %>
+	<%= @workflow.business_unit.incharge_user.name %></p>
+<p><strong><%= t('assignment_method') %>: </strong><%= t(@workflow.assignment) %></p>
+
+<%= link_to '<i class="fa fa-edit fa-2x"></i>'.html_safe, edit_workflow_path(@workflow) %> 
+<%= link_to '<i class="fa fa-list-alt fa-2x"></i>'.html_safe,  workflows_path %>

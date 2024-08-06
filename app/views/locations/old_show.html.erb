@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="panel panel-default">
+    <div class="panel-heading"><%= t('location') %>: <%= @location.code %> 
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div  class="col-xs-12 col-md-12  ">
+          <strong><%= t('name') %>: </strong><%= @location.name %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div  class="col-xs-12 col-md-12  ">
+          <strong><%= t('chi_name') %>: </strong><%= @location.chi_name %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div  class="col-xs-12 col-md-12  ">
+          <strong><%= t('parent') %>: </strong><%= @location.parent.display_name if @location.parent_id? %>
+        </div>
+      </div>
+      <br/>
+    <%= link_to '<i class="fa fa-edit fa-2x"></i>'.html_safe, edit_location_path(@location) %> | 
+    <%= link_to '<i class="fa fa-list-alt fa-2x"></i>'.html_safe, locations_path %> | 
+    <%= link_to '<i class="fa fa-trash fa-2x"></i>'.html_safe, @location, method: :delete, data: { confirm: 'Are you sure?' } %>
+  </div>
+</div>
+

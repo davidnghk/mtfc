@@ -1,0 +1,21 @@
+<td>
+  <%#= link_to user.email, user %>
+  <%= user.email  %>
+</td>
+<td>
+  <%= user.name %>
+</td>
+<td>
+  <%= form_for(user) do |f| %>
+    <%#= f.select(:role, User.roles.keys.map {|role| [role.titleize,role]}) %>
+    <%#= f.text_field :role %>
+  	<%= f.select :role, ['admin', 'manager', 'worker', 'lead', 'guest', 'new'] %>
+    <%= f.submit 'Change Role', :class => 'button-xs' %>
+  <% end %>
+</td>
+<td>
+    <%= link_to t("login_as"), masquerade_path(user) unless user == current_user %>
+</td>
+<td>
+  <%= link_to("Delete user", user_path(user), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'button-xs') unless user == current_user %>
+</td>

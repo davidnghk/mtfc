@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="panel panel-default">
+    <div class="panel-heading"><%= t('calls') %> <%= @call.id %></div>
+    <div class="panel-body"><br/>  
+      <div class="row">
+            <div class="col-md-3">
+               <%= image_tag user_avatar(@call.user, 100), class: "rounded" %>
+            </div>
+            <div class="col-md-9">
+               <p><%= @call.user.name %></p>
+               <p>170 CM    68 KG  Blood O-plus </p>
+               <p>Health Condition : High Blood Pressure </p>
+            </div>
+      </div><br/>
+      <p><strong><%= t('booking_datetime') %>: </strong><%= @call.booking_datetime.strftime('%F %I:%M %P') %></p>
+      <p><strong><%= t('address') %>: </strong><%= @call.address %></p>
+      <p><strong><%= t('latitude') %>: </strong><%= @call.latitude %></p>
+      <p><strong><%= t('longitude') %>: </strong><%= @call.longitude %></p>
+      <p><strong><%= t('altitude') %>: </strong><%= @call.altitude %></p>
+
+        <%= link_to '<i class="fa fa-edit fa-2x"></i>'.html_safe, edit_call_path(@call) %> 
+        <%= link_to '<i class="fa fa-list-alt fa-2x"></i>'.html_safe, calls_path, data: { turbolinks: false } %>
+        <%= link_to '<i class="fa fa-trash fa-2x"></i>'.html_safe, @call, method: :delete, data: { confirm: 'Are you sure?' } %>
+        <br/>
+      <%= image_tag "https://maps.google.com/maps/api/staticmap?size=900x600&key=AIzaSyA9afljyyIF4GlEhb51-IqK-FH2i7IqJCg&language=zh-TW&sensor=false&zoom=16&markers=#{@call.latitude}%2C#{@call.longitude}" %>
+    </div>
+  </div>
+</div>
+<br/>

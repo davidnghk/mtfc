@@ -1,0 +1,21 @@
+
+<%= simple_form_for(@occupation) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <%= f.association :location %>
+    <%= f.input :checkin_datetime %>
+    <%= f.input :due_date %>
+    <%= f.input :checkout_datetime %>
+    <%= f.input :customer %>
+    <%= f.input :passport %>
+    <%= f.input :price %>
+    <%= f.input :total %>
+    <%= f.input :status %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

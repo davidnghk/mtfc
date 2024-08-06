@@ -1,0 +1,17 @@
+
+<div class="container">
+  <div class="panel panel-default">
+    <div class="panel-heading"><%= t('guardians') %></div>
+    <div class="panel-body"><br/>       
+        <p><strong><%= t('user') %>: </strong><%= @guardian.user.name %></p>
+        <p><strong><%= t('name') %>: </strong><%= @guardian.name %></p>
+        <p><strong><%= t('email') %>: </strong><%= @guardian.email %></p>
+        <p><strong><%= t('phone') %>: </strong><%= @guardian.phone %></p>
+        <p><strong><%= t('guardian') %>: </strong><%= @guardian.custodian.name if @guardian.guardian_user_id %></p>
+
+        <%= link_to '<i class="fa fa-edit fa-2x"></i>'.html_safe, edit_guardian_path(@guardian) %> 
+        <%= link_to '<i class="fa fa-list-alt fa-2x"></i>'.html_safe, guardians_path, data: { turbolinks: false } %>
+        <%= link_to '<i class="fa fa-trash fa-2x"></i>'.html_safe, @guardian, method: :delete, data: { confirm: 'Are you sure?' } %>
+    </div>
+  </div>
+</div>

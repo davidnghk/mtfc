@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="panel panel-default">
+    <div class="panel-heading"><%= t('notifications') %></div>
+    <div class="panel-body">
+      <%= paginate @notifications %><br/>
+      <table>
+        <thead>
+          <tr>
+            <th><%= t('user') %></th>
+            <th><%= t('content') %></th>
+            <th><%= t('read_at') %></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @notifications.each do |notification| %>
+           <tr data-link="<%=  polymorphic_url(notification.notifiable) %> ">
+              <td><%= image_tag user_avatar(notification.user, 25), class: "rounded-circle" %></td>
+              <td><%= notification.content %></td>
+              <td><%= notification.read_at.strftime('%F %I:%M %P') if notification.read_at? %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+    <br>
+
+</div> 

@@ -1,0 +1,307 @@
+
+<div class="container">
+  <div class="panel panel-default">
+    <div class="panel-heading"><%= t('assignment') %>: <%= @assignment.no %>
+      <%= @assignment.work.display_name %>
+    </div>
+    <div class="panel-body">
+
+          <div class="row ">
+            <div  class="col-xs-6 col-md-6  ">
+              <strong><%= t('work') %>: </strong>
+                <i class="material-icons md-18"><%= @assignment.work.icon %>
+                <% if !mobile_device?  %>
+                    </i><%= @assignment.work.display_name %> <%= @assignment.no %>   <%= @subworkcount %>
+                <% else %>
+                  </i><%= @assignment.no %>
+                <% end %>
+            </div>
+            <div  class="col-xs-6 col-md-6  ">
+                <strong><%= t('user_ref') %>: </strong>
+                <%= @assignment.user_ref %>
+              </div>
+          </div>
+
+          <div class="row ">
+            <div  class="col-xs-6 col-md-6  ">
+              <strong><%= t('address') %>: </strong>
+              <%= @assignment.location_address %>
+            </div>
+            <div  class="col-xs-6 col-md-6  ">
+              <strong><%= t('contractor') %>: </strong>
+              <%= @assignment.contractor.display_name %>
+            </div>
+          </div>
+
+          <div class="row ">
+            <div  class="col-xs-6 col-md-6  ">
+              <strong><%= t('incharge') %>: </strong>
+              <%= image_tag user_avatar(@assignment.incharge_user, 25), class: "rounded-circle" %></td>
+      			  <%= @assignment.incharge_user.name %>
+            </div>
+            <div  class="col-xs-6 col-md-6  ">
+              <strong><%= t('worker') %>: </strong>
+              <%= image_tag user_avatar(@assignment.worker_user, 25), class: "rounded-circle" %></td>
+  		    	  <%= @assignment.worker_user.name %>
+            </div>
+          </div>
+
+          <div class="row ">
+            <div  class="col-xs-6 col-md-6  ">
+              <strong><%= t('start_date') %>: </strong>
+              <%= @assignment.start_datetime.strftime('%F %I:%M %P') if @assignment.start_datetime? %>
+            </div>
+            <div  class="col-xs-6 col-md-6  ">
+              <strong><%= t('status') %>: </strong>
+              <i class="material-icons md-18"><%= status_icon(@assignment.aasm_state) %> </i>
+              <%= t(@assignment.aasm_state) %>
+            </div>
+          </div>
+
+          <% if @assignment.due_datetime? %>
+            <div class="row ">
+              <div  class="col-xs-6 col-md-6  ">
+                <strong><%= t('due_date') %>: </strong>
+                <%= @assignment.due_datetime.strftime('%F %I:%M %P') if @assignment.due_datetime? %>
+              </div>
+              <div  class="col-xs-6 col-md-6  ">
+                <strong><%= t('end_date') %>: </strong>
+                <%= @assignment.end_datetime.strftime('%F %I:%M %P') if @assignment.end_datetime? %>
+              </div>
+            </div>
+          <% end %>
+
+          <% if @assignment.witness_id? %>
+            <div class="row ">
+              <div  class="col-xs-6 col-md-6  ">
+                <strong><%= t('witness') %>: </strong>
+                  <%= image_tag user_avatar(@assignment.witness, 25), class: "rounded-circle" %></td>
+                  <%= @assignment.witness.name %>
+              </div>
+            </div>
+          <% end %>
+
+
+          <% if @assignment.star? %>
+            <div class="row ">
+              <div  class="col-xs-6 col-md-6  ">
+                <strong><%= t('rating') %>: </strong>
+                <%= render_stars(@assignment.star) %>
+              </div>
+            </div>
+          <% end %>
+
+          <% if @assignment.comment? %>
+            <div class="row ">
+              <div  class="col-xs-12 col-md-12  ">
+                <strong><%= t('remarks') %>: </strong>
+                <%= @assignment.remarks %>
+              </div>
+            </div>
+          <% end %>
+
+        <!-- Defect items -->
+        <% if @assignment.work.count_child > 0  %>
+          <br>
+          <div class="container-fluid" style="border:1px solid #cecece;">
+            <% if mobile_device?  %>
+              <%= t('issue') %> <%= link_to '<i class="fa fa-plus fa-3x"></i>'.html_safe,  new_defect_path(assignment_id: @assignment) %>
+            <% else %>
+              <%= t('issue') %> <%= link_to '<i class="fa fa-plus fa-2x"></i>'.html_safe,  new_defect_path(assignment_id: @assignment) %>
+            <% end %>
+            <% if @assignment.defects.count > 0  %>
+              <table  class="table table-striped">
+                <thead>
+
+                </thead>
+                <tbody>
+                    <% @assignment.defects.each do |defect| %>
+                      <tr data-link="<%= defect_path(defect) %>">
+                        <td><%= image_tag defect.before_photo.thumb.url if defect.before_photo? %></td>
+                        <td><%= defect.issue.full_name  %><br/>
+                          <%= defect.remarks  %></td>
+                        <td><%= defect.rating  %></td>
+                        <td><%= image_tag defect.after_photo.thumb.url if defect.after_photo? %></td>
+
+                        <% if mobile_device?  %>
+                          <td><%= link_to '<i class="fa fa-trash fa-3x"></i>'.html_safe, defect, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+                        <% else %>
+                          <td><%= link_to '<i class="fa fa-trash fa-2x"></i>'.html_safe, defect, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+                        <% end %>
+
+                      </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            <% end %>
+          </div>
+        <% end %>
+
+<% if @assignment.work_order? %>
+
+          <%= link_to image_tag("floorplan.png"), "https://viewer.autodesk.com/id/dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6YTM2MHZpZXdlci90MTU1MTg4NzQzNzQwMF8wMDMwNjI3NjI2MDMyMzIzNDk2XzE1NTE4ODc0Mzc0MDMucnZ0?designtype=rvt&sheetId=MjUwYTZjZTUtZWU3MC1mZGNhLWJmYzktNDExMWY1NGU5YmFh", :target => "_blank" %>
+          <%= link_to image_tag("floorplan.png"), "https://viewer.autodesk.com/id/dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6YTM2MHZpZXdlci90MTU1MTg4NzU2OTg0M18wMzg2NjU4OTQ2ODM5NzkyOTZfMTU1MTg4NzU2OTg0OS5ydnQ?designtype=rvt&sheetId=NmQ2ZWUxMjEtMzZjZS1jYzgwLTE5ZWItMWJkNWZmMDA4NWZh", :target => "_blank" %>
+
+          <% if @assignment.bim_url? %>
+            <%= link_to image_tag("issue.png"),  "#{@assignment.bim_url}", :target => "_blank"  %>
+            <% end %>
+    <br/>
+<% end %>
+
+  <% if @assignment.work.setting1 == 1 %>
+    <%= render 'workflow1_buttons' %>
+  <% elsif @assignment.work.setting1 == 2 %>
+    <%= render 'workflow2_buttons' %>
+  <% else %>
+    <%= render 'workflow0_buttons' %>
+  <% end %>
+
+    <button type="button" class="btn btn-normal btn-default" data-toggle="modal" data-target="#remarks"><%= t('remarks') %></button>
+
+    <!-- Modal -->
+    <div id="remarks" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title"><%= t('remarks') %></h4>
+          </div>
+          <div class="modal-body">
+
+            <%= simple_form_for(@assignment) do |f| %>
+                <%= f.input_field :date_range, as: :hidden, :value => nil  %>
+                <div class="form-group">
+                  <%= f.text_area :remarks, rows: 3, class: "form-control" %>
+                </div>
+
+                <div class="text-center">
+                  <%= f.submit "update", class: "btn btn-normal" %>
+                </div>
+            <% end %>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+<% if current_user.admin? or current_user.admin? %>
+  <% if mobile_device?  %>
+    <%= link_to '<i class="fa fa-edit fa-3x" style="color:blue"></i>'.html_safe, edit_assignment_path(@assignment), data: { turbolinks: false }  %>
+    <%= link_to '<i class="fa fa-list-alt fa-3x" style="color:blue"></i>'.html_safe,  assignments_path, data: { turbolinks: false } %>
+
+    <% if @assignment.incharge_user == @assignment.worker_user %>
+        <%= link_to '<i class="fa fa-level-down fa-3x" style="color:blue"></i>'.html_safe, new_assignment_path(parent_id: @assignment) %>
+    <% end %>
+    <% if @assignment.parent_id? %>
+          <%= link_to '<i class="fa fa-level-up fa-3x" style="color:blue"></i>'.html_safe,  @assignment.parent, data: { turbolinks: false } %>
+    <% end %>
+  <% else %>
+    <%= link_to '<i class="fa fa-edit fa-2x" style="color:blue"></i>'.html_safe, edit_assignment_path(@assignment), data: { turbolinks: false }  %>
+    <%= link_to '<i class="fa fa-list-alt fa-2x" style="color:blue"></i>'.html_safe,  assignments_path, data: { turbolinks: false } %>
+    <%#= link_to '<i class="fa fa-copy fa-2x" style="color:blue"></i>'.html_safe,  assignment_download_path(@assignment, format: "pdf")  %>
+
+    <% if @assignment.incharge_user == @assignment.worker_user %>
+        <%= link_to '<i class="fa fa-level-down fa-2x" style="color:blue"></i>'.html_safe, new_assignment_path(parent_id: @assignment) %>
+    <% end %>
+    <% if @assignment.parent_id? %>
+          <%= link_to '<i class="fa fa-level-up fa-2x" style="color:blue"></i>'.html_safe,  @assignment.parent, data: { turbolinks: false } %>
+    <% end %>
+  <% end %>
+<% else %>
+<% end %>
+
+<% if @assignment.children.count > 0 %>
+
+  <table  class="table table-striped">
+    <thead>
+      <tr>
+        <th><%= t('work') %></th>
+        <th><%= t('start_date') %></th>
+        <th><%= t('worker') %></th>
+        <th><%= t('status') %></th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+        <% @assignment.children.each do |assignment| %>
+          <tr data-link="<%= assignment_path(assignment) %>">
+          <td>
+            <i class="material-icons md-18"><%= assignment.work.icon %>
+            <% if !mobile_device?  %>
+                </i><%= assignment.job %>
+            <% else %>
+              </i><%= assignment.job_short %>
+            <% end %>
+          </td>
+          <td><%= assignment.start_datetime.strftime('%H:%M') if assignment.start_datetime? %></td>
+          <td>
+            <% if assignment.worker_user_id? %>
+              <%= image_tag user_avatar(assignment.worker_user, 25), class: "rounded-circle" %> <%= assignment.worker_user.fullname %>
+            <% end %>
+          </td>
+          <td>
+            <i class="material-icons"><%= status_icon(assignment.aasm_state) %> </i> </td>
+        </tr>
+      <% end %>
+    </tbody>
+
+  </table>
+
+
+<% end %>
+
+	<%= render 'photo_upload' %>
+
+    </div>
+  </div>
+</div>
+<br/>
+
+
+      <%#= image_tag "http://maps.google.com/maps/api/staticmap?size=900x600&key=AIzaSyA9afljyyIF4GlEhb51-IqK-FH2i7IqJCg&language=zh-TW&sensor=false&zoom=16&markers=#{@assignment.latitude}%2C#{@assignment.longitude}", style: 'height:100%;width:auto;' %>
+
+
+<br/>
+  <div id="map",  style="height:100%;width:auto;"></div>
+  <div id="photo_details"><%= render 'photos/photo_details' %> </div>
+<script>
+  $('#stars').raty({
+    path: '/assets',
+    scoreName: 'assignment[star]',
+    score: 1
+  });
+
+  function initialize() {
+    var location = {lat: 22.260, lng: 114.18828}
+
+    var map = new google.maps.Map(document.getElementById('map'), {
+      center: location,
+      zoom: 12
+    });
+
+    <% if @assignment.longitude? %>
+      new google.maps.Marker({
+            position: {lat: <%= @assignment.latitude %>, lng: <%= @assignment.longitude %> },
+            map: map
+          })
+    <% end %>
+
+    <% @assignment.photos.any? do  %>
+      <% @assignment.photos.each do |photo| %>
+        <% if photo.latitude.present? %>
+          new google.maps.Marker({
+            position: {lat: <%= photo.latitude %>, lng: <%= photo.longitude %> },
+            map: map
+          })
+        <% end %>
+      <% end %>
+    <% end %>
+  }
+
+  google.maps.event.addDomListener(window, 'load', initialize);
+</script>

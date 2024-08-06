@@ -1,0 +1,70 @@
+<% if @assignment.booked?  %>
+  <div class="btn-group d-flex" role="toolbar" aria-label="Toolbar with button groups">
+    <%= link_to t('assign'), assign_assignment_path(@assignment), method: :put,   class: "btn btn-normal btn-default  " %>  
+    <%= link_to t('quote'), quote_assignment_path(@assignment), method: :put,   class: "btn btn-normal btn-default  " %> 
+  </div>
+<% end %>
+
+<% if @assignment.quoted?  %>
+  <div class="btn-group d-flex" role="toolbar" aria-label="Toolbar with button groups">
+    <%= link_to t('assign'), assign_assignment_path(@assignment), method: :put,   class: "btn btn-normal btn-default  " %>  
+  </div>
+<% end %>
+
+<% if @assignment.assigned?  %>
+  <div class="btn-group d-flex" role="toolbar" aria-label="Toolbar with button groups">
+    <%= link_to t('acknowledge'), acknowledge_assignment_path(@assignment), method: :put,   class: "btn btn-normal btn-default " %>
+  </div>
+<% end %>
+
+<% if @assignment.acknowledged?  %>
+  <div class="btn-group d-flex" role="toolbar" aria-label="Toolbar with button groups">
+    <%= link_to t('start'), start_assignment_path(@assignment), method: :put,   class: "btn btn-normal btn-default  " %> 
+    <%= link_to t('complete'), complete_assignment_path(@assignment), method: :put,   class: "btn btn-normal btn-default " %> 
+  </div>
+<% end %>
+
+<% if @assignment.working?  %>
+  <div class="btn-group d-flex" role="toolbar" aria-label="Toolbar with button groups">
+    <%= link_to t('complete'), complete_assignment_path(@assignment), method: :put,   class: "btn btn-normal btn-default " %> 
+  </div>
+<% end %>
+
+<% if current_user.admin? or current_user.admin? %> 
+  <% if @assignment.completed? %>
+
+    <button type="button" class="btn btn-normal btn-default" data-toggle="modal" data-target="#rating"><%= t('rating') %></button>
+
+    <!-- Modal -->
+    <div id="rating" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title"><%= t('rating') %></h4>
+          </div>
+          <div class="modal-body">
+
+            <%= simple_form_for(@assignment) do |f| %>
+                <%= f.input_field :date_range, as: :hidden, :value => nil  %>
+                <div class="form-group text-center">
+                  <div id="stars"></div>
+                </div>
+                <div class="form-group">
+                  <%= f.text_area :comment, rows: 3, class: "form-control" %>
+                </div>
+
+                <div class="text-center">
+                  <%= f.submit "Add Review", class: "btn btn-normal" %>
+                </div>
+            <% end %>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  <% end %>
+<% end %>

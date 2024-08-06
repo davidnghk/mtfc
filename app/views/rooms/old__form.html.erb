@@ -1,0 +1,22 @@
+
+<%= simple_form_for(@room) do |f| %>
+
+  <div class="form-inputs">
+    <%= f.input :category_id %>
+    <%= f.association :location %>
+    <%= f.input :accomodate %>
+    <%= f.input :area %>
+    <%= f.input :bed_type %>
+    <%= f.input :bath_room %>
+    <%= f.input :tv %>
+    <%= f.input :has_kitchen %>
+    <%= f.input :has_air %>
+    <%= f.input :has_intenet %>
+    <%= f.input :status %>
+    <%= f.input :condition %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

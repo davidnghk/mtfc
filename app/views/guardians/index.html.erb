@@ -1,0 +1,33 @@
+<div class="container">
+  <div class="panel panel-default">
+    <div class="panel-heading"><%= t('guardians') %></div>
+    <div class="panel-body">
+
+      <table>
+        <thead>
+          <tr>
+            <th><%= t('name') %></th>
+            <th><%= t('email') %></th>
+            <th><%= t('phone') %></th>
+            <th><%= t('guardian') %></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @guardians.each do |guardian| %>
+            <tr data-link="<%= guardian_path(guardian) %>">
+              <td><%= guardian.name %></td>
+              <td><%= guardian.email %></td>
+              <td><%= guardian.phone %></td>
+              <td><%= guardian.custodian.name if guardian.guardian_user_id %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+    <br>
+
+    <%= link_to '<i class="fa fa-plus-circle fa-2x"></i>'.html_safe, new_guardian_path %>
+
+</div> 

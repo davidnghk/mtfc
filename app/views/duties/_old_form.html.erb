@@ -1,0 +1,17 @@
+
+<%= simple_form_for(@duty) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <%= f.association :work, :collection => Master.where("parent_id = ?", 1) %>
+    <%= f.association :location %>
+    <%= f.association :user %>
+    <%= f.input :start_date, as: :date, html5: true %>
+    <%= f.input :end_date,  as: :date, html5: true  %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

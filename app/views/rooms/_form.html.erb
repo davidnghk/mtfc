@@ -1,0 +1,98 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <%= t('room') %>
+  </div>
+  <div class="panel-body">
+    <div class="container">
+
+      <%= simple_form_for @room do |f| %>
+
+        <div class="form-inputs">
+          <div class="row">
+            <div class="col-md-4 ">
+              <div class="form-group">
+                <%= f.association :category, label: t('category') , :collection => Master.RoomCategory %>
+              </div>
+            </div>
+            <div class="col-md-4 ">
+              <div class="form-group">
+                <%= f.association :bed_type, label: t('bed') , :collection => Master.BedType %>
+              </div>
+            </div>
+            <div class="col-md-4 ">
+              <div class="form-group">
+                <%= f.input :smoking, label: t('smoking') , collection: Room.i18n_smokings %>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4 ">
+              <div class="form-group">
+                <%= f.input :room_no, label: t('num') %>
+              </div>
+            </div>
+            
+            <div class="col-md-4 ">
+              <div class="form-group">
+                <%= f.input :accomodate, label: t('acc')  %>
+              </div>
+            </div>
+            <div class="col-md-4 ">
+              <div class="form-group">
+                <%= f.input :area, label: t('area')   %>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4 ">
+              <div class="form-group">
+                <%= f.input :bath_room, label: t('bath')  %>
+              </div>
+            </div>
+            <div class="col-md-4 ">
+              <div class="form-group">
+                 <%= f.input :tv, label: t('tv')  %>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4 ">
+              <div class="form-group">
+                <%= f.input :has_kitchen, label: t('kitchen')+'?'  %>
+              </div>
+            </div>
+            <div class="col-md-4 ">
+              <div class="form-group">
+                <%= f.input :has_wifi, label: t('wifi')+'?'   %>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4 ">
+              <div class="form-group">
+                <%= f.input :status, label: t('status') , collection: Room.i18n_statuses %>
+              </div>
+            </div>
+            <div class="col-md-4 ">
+              <div class="form-group">
+                <%= f.input :condition, label: t('condition') , collection: Room.i18n_conditions %>
+              </div>
+            </div>
+          </div>
+
+    <div class="form-actions">
+      <%= button_tag type: 'submit', class: "button my-button", id: "register-button" do %>
+          <i class="fa fa-save fa-2x" aria-hidden="true"></i>
+      <% end %>
+    </div>
+        <div><%= f.submit "Save", class: "btn btn-normal" %></div>
+
+      <% end %>
+
+    </div>
+  </div>
+</div>

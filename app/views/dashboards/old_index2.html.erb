@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="col-md-8">
+    <!-- Your Listings -->
+    <div class="panel panel-default">
+      <div class="panel-heading"><%= t('your_listings') %> (<%= @assignments.length %>)</div>
+      <div class="panel-body">
+        <% if !mobile_device?  %> 
+          <%= render partial: "assignments/assignment_list", locals: {assignments: @assignments} %>
+        <% else %>
+          <%= render partial: "assignments/assignment_mobile_list", locals: {assignments: @assignments} %>        
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <% if !mobile_device?  %> 
+    <div class="col-md-4">
+      <%= render partial: "shared/rightbar" %>
+    </div>
+  <% end %>
+   
+  </div>

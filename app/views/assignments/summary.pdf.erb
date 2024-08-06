@@ -1,0 +1,228 @@
+<style>
+.break { page-break-before: always; }
+h1 {
+    font-size: 25px;
+}
+h2 {
+    font-size: 18px;
+}
+h3 {
+    font-size: 16px;
+}
+p {
+    font-size: 15px;
+    line-height: 80%;
+}
+.space { margin-top: 1000px; }
+
+table, th, td {
+    table-layout: fixed;
+    border-spacing: 5px;
+    border: 1px solid black;
+    border-collapse: collapse;
+    font-size: 16px;
+    padding: 6px;
+    width:100%; 
+    padding-bottom: 6px;
+    line-height: 100%;
+}
+
+table#t01 {
+    padding: 5px;
+    padding-bottom: 5px;
+    width:88%; 
+    height:88%;
+    border: 0;
+}
+
+table#t02 {
+  table-layout: fixed;
+  height: 2000%; 
+  width: 100%;  
+}
+
+#table1, th, td {
+    table-layout: fixed;
+    border-spacing: 5px;
+    border-collapse: collapse;
+    font-size: 16px;
+    padding: 6px;
+    width:100%; 
+    padding-bottom: 6px;
+    line-height: 100%;
+}
+
+.noBorder {
+    border:none !important;
+    border: 0;
+}
+
+table2 {
+    table-layout: fixed;
+    border-spacing: 5px;
+    border-collapse: collapse;
+    font-size: 16px;
+    padding: 6px;
+    width:100%; 
+    padding-bottom: 6px;
+    line-height: 100%;
+    border: 0;
+} 
+
+.footer,
+.push {
+  height: 120px;
+}
+
+</style>
+<html>
+<head>
+	<%= wicked_pdf_stylesheet_link_tag "pdf" %>
+</head>
+<body>
+<div>
+  <center>
+      <h2>Construction Safety Inspection Checklist</h2>
+      <h2>Summary of Follow-up Actions</h2>
+  </center>
+</div>
+
+<h2><strong>Part I:</strong></h2>
+<table class="noBorder">
+  <thead>
+  	<tr></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan="3" class="noBorder">Contract No.: 01/HY/2016</td>
+      <td colspan="9" class="noBorder">Contract Title:  Highways Department Term Contract, Hong Kong Island excluding High Speed Roads 2017-2023</td>
+    </tr>
+     <tr>
+      <td colspan="3" class="noBorder">Date of Inspection: <%= @first.start_datetime.strftime('%F') if @first.start_datetime %></td>
+      <td colspan="9" class="noBorder">Time:    </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+
+<h2><strong>Person(s) making the inspection:</strong></h2>
+<table style="width:100%; ">
+  <thead>
+  	<tr>
+	    <th ></th>
+	    <th colspan="3">Name in Block Letter</th>
+	    <th colspan="3">Designation</th>
+	    <th colspan="3">Organizatioon</th>
+	</tr>
+  </thead>
+  <tbody>
+	<tr>
+      <td>1.</td>
+      <td colspan="3">Mr. Y.H. Chan</td>
+      <td colspan="3"><center>MSIOW/Happy Valley</center></td>
+      <td colspan="3"><center>Highways Dept.</center></td>
+    </tr>
+    </tr>
+      <td>2.</td>
+      <td colspan="3">Mr. Y.K. Chan </td>
+      <td colspan="3"><center>Safety Manager</center></td>
+      <td colspan="3"><center>Chiu Hing</center></td>
+    </tr>
+    </tr>
+      <td>3.</td>
+      <td colspan="3">Mr. Yip Wai Ming</td>
+      <td colspan="3"><center>RSO</center></td>
+      <td colspan="3"><center>Mr. Yip Wai Ming</center></td>
+    </tr>
+    </tr>
+      <td>4.</td>
+      <td colspan="3">Mr. Chung Wing Fung</td>
+      <td colspan="3"><center>RSO</center></td>
+      <td colspan="3"><center>Chiu Hing</center></td>
+    </tr>
+  </tbody>
+</table>
+<br>
+
+<% ind = 1 %>
+ <table  >
+  <thead>
+  	  <tr>
+	  </tr>
+  </thead>
+  <tbody>
+  	  <tr>
+	    <th>Item No</th>
+	    <th colspan="2">Location</th>
+	    <th colspan="3">Situatin requiring follow up action</th>
+	    <th>Action By</th>
+	    <th>Date Completed</th>
+	    <th colspan="2">Remarks</th>
+	    <th>Inspection Checklist Ref</th>
+	  </tr>
+	  <% @assignments.each do |assignment| %>
+	  	<% if assignment.defects.count == 0 %>
+	  	      <tr>
+		    	  <td><%= ind %></td>
+	              <td colspan="2"><%= assignment.location_address %></td>
+		          <td colspan="3">2.1 No safety deficiency observed at the time of inspection.</td>
+		          <td > -- </td>
+		          <td > -- </td>
+		          <td colspan="2"> -- </td>
+		          <td > -- </td>
+	          </tr>
+   	          <% ind = ind +1 %>
+	  	<% else %>
+		    <% assignment.defects.each do |defect| %>
+		      <tr>
+		    	  <td><%= ind %></td>
+	              <td colspan="2"><%= assignment.address %></td>
+		          <td colspan="3"><%= defect.issue.code %> <%= defect.issue.name %></td>
+		          <td ><%= assignment.incharge_user.name %></td>
+		          <td ><%= assignment.due_datetime.strftime('%F') if assignment.due_datetime? %></td>
+		          <td colspan="2"><%= defect.remarks %></td>
+		          <td ><%= defect.issue.code %></td>
+	          </tr>
+	          <% ind = ind +1 %>
+		  	<% end %>
+		<% end %>
+	  <% end %>
+  </tbody>
+ </table>
+
+ <p style="page-break-before: always"></p>
+
+<h2>To be signed at the end of inspecton:</h2>
+<table class="noBorder">
+  <thead>
+  	<tr></tr>
+  </thead>
+  <tbody>
+     <tr>
+      <td colspan="3" class="noBorder">Architect/Engineer or his representative:</td>
+      <td colspan="3" class="noBorder">_____________________</td>
+      <td colspan="3" class="noBorder">Safety Officer:</td>
+      <td colspan="3" class="noBorder">_____________________</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2><strong>Part II: (To be comtersigned after ALL actions are completed)</strong></h2>
+<table class="noBorder">
+  <thead>
+  	<tr></tr>
+  </thead>
+  <tbody>
+     <tr>
+      <td colspan="3" class="noBorder">Safety Officer:</td>
+      <td colspan="3" class="noBorder">_____________________</td>
+      <td colspan="3" class="noBorder">Architect/Engineer or his representative:</td>
+      <td colspan="3" class="noBorder">_____________________</td>
+    </tr>     <tr>
+      <td colspan="3" class="noBorder">Date:</td>
+      <td colspan="3" class="noBorder">_____________________</td>
+      <td colspan="3" class="noBorder">Date:</td>
+      <td colspan="3" class="noBorder">_____________________</td>
+    </tr>
+  </tbody>
+</table>

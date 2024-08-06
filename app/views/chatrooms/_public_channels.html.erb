@@ -1,0 +1,24 @@
+<div class="container">
+  <div class="panel panel-default">
+    <div class="panel-heading"><%= t('business_unit') %></div>
+    <div class="panel-body">
+      <table>
+        <tbody>
+          <% @chatrooms.public_channels.each do |chatroom| %>
+            <tr>
+              <td><%= chatroom.display_name %></td>
+              <td><%= image_tag user_avatar(chatroom.incharge_user, 30), class: "rounded-circle" %><%= chatroom.incharge_user.username %>
+              </td>
+              <td><%= link_to '<i class="fa fa-edit fa-2x"></i>'.html_safe, edit_chatroom_path(chatroom) %> </td>
+              <td><%= link_to '<i class="fa fa-trash fa-2x"></i>'.html_safe, chatroom, method: :delete, data: { confirm: 'Are you sure?' }  %> </td>
+              <%#= link_to '<i class="fa fa-sign-in fa-2x"></i>'.html_safe, chatroom_chatroom_users_path(chatroom), method: :post %> 
+              <%#= link_to '<i class="fa fa-sign-out fa-2x"></i>'.html_safe, chatroom_chatroom_users_path(chatroom), method: :delete %> 
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <%= link_to '<i class="fa fa-plus-circle fa-2x"></i>'.html_safe, new_chatroom_path %>
+      <br>
+    </div>
+  </div>
+</div>

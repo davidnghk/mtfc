@@ -1,0 +1,15 @@
+<div class="container">
+  <div class="panel panel-default">
+    <div class="panel-heading"><%= t('announcements') %></div>
+    <div class="panel-body">
+    	<br/>
+		<p>  <strong><%= t('start_at') %>: </strong><%= @announcement.start_at.strftime('%F %I:%M %P') %></p>
+		<p><strong><%= t('end_at') %>: </strong><%= @announcement.end_at.strftime('%F %I:%M %P')  %></p>
+		<p><strong><%= t('content') %>: </strong><%= @announcement.content %></p>
+		<p><strong><%= t('business_unit') %>: </strong><%= Chatroom.find(@announcement.business_unit_id).display_name if @announcement.business_unit_id? %></p>
+
+		<%= link_to '<i class="fa fa-edit fa-2x"></i>'.html_safe, edit_announcement_path(@announcement) %> 
+		<%= link_to '<i class="fa fa-list-alt fa-2x"></i>'.html_safe,  announcements_path, data: { turbolinks: false }  %>
+	</div>
+  </div>
+</div>

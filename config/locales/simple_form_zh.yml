@@ -1,0 +1,29 @@
+zh:
+  simple_form:
+    "yes": '是'
+    "no": '不是'
+    required:
+      text: '必要'
+      mark: '*'
+
+    error_notification:
+      default_message: "請查看以下問題："
+    #Examples
+    labels:
+      defaults:
+        password: '密碼'
+      user:
+        new:
+          email: '電郵登錄。'
+        edit:
+          email: '電郵。'
+    hints:
+      defaults:
+        username: '要登錄的用戶名。'
+        password: '請不要特別的字符。'
+    include_blanks:
+      defaults:
+        age: '不好說'
+    prompts:
+      defaults:
+        age: '選擇你的年齡'

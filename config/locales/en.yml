@@ -1,0 +1,101 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# The following keys must be escaped otherwise they will not be retrieved by
+# the default I18n backend:
+#
+# true, false, on, off, yes, no
+#
+# Instead, surround them with single quotes.
+#
+# en:
+#   'true': 'foo'
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+en:
+  BC: "BC"
+  duty: "Roster"
+  status: "STS"
+  worker: "staff"
+  incharge_user: "Mgr"
+  incharge: "Mgr"
+  ordered: "ORD"
+  Flowkus: "Flowkus"
+  start_date: "Time"
+  start_datetime: "Start Date"
+  all: "ALL"
+  booked: "BKD"
+  assigned: "AGN"
+  quoted: "QUO" 
+  cancelled: "CNC" 
+  acknowledged: "ACK"
+  working: "WRK"
+  completed: "CMP"
+  finished: "FIN" 
+  rejected: "REJ" 
+
+  brand: "fieldConnect"
+
+  workflow_assignments:
+    manual:   "Manual"
+    auto:     "Auto"
+
+  statuses:
+    Occupied: "OCC"
+    Others:   "OTH"
+    Vacant:   "VAC"
+
+  smokings:
+    Smoking:    "SM"
+    NonSmoking: "NS"
+
+  conditions:
+    Clean: "Clean"
+    Dirty: "Dirty"
+
+  simple_form:
+    labels:
+      guardian:
+        guardian_user: "Guardian"
+      workflow:
+        incharge_user: "Mgr"
+      assignment:
+        incharge_user: "Mgr"
+        aasm_state: "Status"
+        start_datetime: "Start Date"
+        due_datetime: "Due Date"
+        end_datetime: "End Date"
+      user:
+        username: 'User name'
+        password: 'Password'
+    hints:
+      user:
+        username: 'User name to sign in.'
+        password: 'No special characters, please.'
+    placeholders:
+      user:
+        username: 'Your username'
+        password: '****'
+    include_blanks:
+      user:
+        age: 'Rather not say'
+    prompts:
+      user:
+        role: 'Select your role'

@@ -1,0 +1,10 @@
+<% if user_signed_in? %>
+  <h5><a><%= link_to t('business_unit'), chatrooms_path %></h5>
+  <ul>
+    <%# current_user.chatrooms.each do |chatroom| %>
+    <% current_user.chatrooms.public_channels.each do |chatroom| %>
+      <li><%= link_to chatroom.display_name, chatroom, data: {behavior: "chatroom-link", chatroom_id: chatroom.id} %></li>
+    <% end %>
+  </ul>
+
+<% end %>

@@ -1,0 +1,107 @@
+var CACHE_VERSION = 'v1';
+var CACHE_NAME = CACHE_VERSION + ':sw-cache-';
+var CACHE_STATIC_NAME = 'static-v5';
+var CACHE_DYNAMIC_NAME = 'dynamic-v5';
+
+function onInstall(event) {
+  console.log('[Serviceworker]', "Installing!", event);
+  event.waitUntil(
+    console.log('[Service Worker] : Pre-Cache App shell loaded'),
+    caches.open(CACHE_STATIC_NAME).then(function prefill(cache) {
+      return cache.addAll([
+        '<%= asset_path 'frontpage.jpg' %>',
+        '<%= asset_path 'application.js' %>',
+        '<%= asset_path 'assignments.js' %>',
+        '<%= asset_path 'chatrooms.js' %>',
+        '<%= asset_path 'date_range_picker.js' %>',
+        '<%= asset_path 'full_calendar.js' %>',
+        '<%= asset_path 'jquery.raty.js' %>',
+        '<%= asset_path 'notifications.js' %>',
+        '<%= asset_path 'task_calendar.js' %>',
+        '<%= asset_path 'application.css' %>',
+        '<%= asset_path 'assignments.css' %>',
+        '<%= asset_path 'letsapp.css' %>',
+        '/',
+        '/offline.html',
+        '/help?locale=en',
+        'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons',
+        'https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css',
+        'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css',
+        'https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css',
+        'https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js'
+      ]);
+    })
+  );
+} 
+
+function trimCache(cacheName, maxItems) {
+  caches.open(cacheName)
+    .then(function (cache) {
+      return cache.keys()
+        .then(function (keys) {
+          if (keys.length > maxItems) {
+            cache.delete(keys[0])
+              .then(trimCache(cacheName, maxItems));
+          }
+        });
+    })
+}
+
+function onActivate(event) {
+  console.log('[Service Worker] Activating Service Worker ....', event);
+  event.waitUntil(
+    caches.keys()
+      .then(function(keyList) {
+        return Promise.all(keyList.map(function(key) {
+          if (key !== CACHE_STATIC_NAME && key !== CACHE_DYNAMIC_NAME) {
+            console.log('[Service Worker] Removing old cache.', key);
+            return caches.delete(key);
+          }
+        }));
+      })
+  );
+  return self.clients.claim();
+}
+
+// Borrowed from https://github.com/TalAter/UpUp
+function onFetch(event) {
+  event.respondWith(
+    // try to return untouched request from network first
+    fetch(event.request)
+      .then(function(res) {
+        return caches.open(CACHE_DYNAMIC_NAME)
+          .then(function(cache) {
+            // Put in cache if succeeds
+            cache.put(event.request.url, res.clone());
+            trimCache(CACHE_DYNAMIC_NAME, 300);
+            return res;
+          })
+      })
+      .catch(function(err) {
+          // Fallback to cache
+          return caches.match(event.request)
+            .then(function(res){
+              if (res === undefined) { 
+                // get and return the offline page
+                return caches.match('/offline.html');
+              } 
+              return res;
+          })
+      })
+  );
+}
+
+self.addEventListener('install', onInstall);
+self.addEventListener('activate', onActivate);
+self.addEventListener('fetch', onFetch);
+
+self.addEventListener("push", (event) => {
+  let title = (event.data && event.data.text()) || "Yay a message";
+  let body = "We have received a push message";
+  let tag = "push-simple-demo-notification-tag";
+  let icon = '/assets/Icon-120.png';
+
+  event.waitUntil(
+    self.registration.showNotification(title, { body, icon, tag })
+  )
+});

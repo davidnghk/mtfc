@@ -1,0 +1,38 @@
+<%= form_tag import_masters_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Import" %>
+<% end %>
+
+<table id="masters" class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= t('code') %></th>
+      <th><%= t('name') %></th>
+      <th><%= t('chi_name') %></th>
+      <th><%= t('icon') %></th>
+      <th><%= t('parent') %></th>
+      <th><%= t('workflow') %></th>
+    </tr>
+  </thead> 
+
+  <tbody>
+    <% @masters.each do |master| %>
+      <tr data-link="<%= master_path(master) %>">
+        <td><%= master.code %></td>
+        <td><%= master.name %></td>
+        <td><%= master.chi_name %></td>
+        <td><%= master.icon %></td>
+        <td><%= master.parent.display_name if master.parent_id? %></td>
+        <td><%= master.setting1  %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to '<i class="fa fa-plus-circle fa-2x"></i>'.html_safe, new_master_path %>
+<%= form_tag import_masters_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Import" %>
+<% end %>

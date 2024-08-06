@@ -1,0 +1,295 @@
+zh:
+  true: '是'
+  false: '否'
+  reported: "已報告"
+  followup: "跟進"
+  BC: "區塊鏈"
+  user_ref: "用戶參考"
+  import: "導入文件"
+  quoted: "報價"
+  quote: "報價"
+  password: "密碼"
+  admin: "管理"
+  inspector: "檢查員"
+  witness: "見證人"
+  remarks: "備註"
+  defect: "問題"
+  BeforePhoto: "工作前照"
+  AfterPhoto: "工作後照"
+  issue: "問題"
+  assign: "派工"
+  work_order: "工作合同"
+  worker_user: "工人"
+  contractor: "承建商"
+  start_datetime: "開始日期"
+  search: "搜索工作"
+  schedule: "議程"
+  rating: "評分"
+  comments: "評論"
+  work_no: "工作編號"
+  authorization: "授權"
+  chat: "交談"
+  sub_assignment: "子任務"
+  task: "工作"
+  heading: "標題"
+  assignment_method: "分配"
+  staff: "員工"
+  worker: "工作人員"
+  post: "職位"
+  business_unit: "業務部"
+  business_staffs: "業務員工"
+  checkin: "登記"
+  checkout: "結賬"
+  Cleaning: "清潔中"
+  guest_room: "客房"
+  guest_rooms: "客房清單"
+  model: "型號"
+  room: "房間"
+  smoking:    "抽煙"
+  Smoking:    "抽煙"
+  NonSmoking: "禁煙"
+  area: "面積"
+  Occupied: "有客"
+  Others:   "其他"
+  Vacant:   "吉房"
+  Clean: "乾淨"
+  Dirty: "待理"
+  condition: "環境"
+  wifi: "無線"
+  kitchen: "廚房"
+  air: "空調"
+  tv: "電視"
+  baths: "衛生間"
+  bed: "床型"
+  acc: "人數"
+  category: "類別"
+  num: "編號"
+  photo: "圖片"
+  upload: "上載"
+  ordered: "指派"
+  duty: "值班時間"
+  date_range: "日期範圍"
+  color: "顏色"
+  complete: "完畢"
+  finish: "完工"
+  start: "開工"
+  accept: "接受"
+  reject: "駁回"
+  rejected: "駁回"
+  new_assignment: "新工作"
+  administration: "系统管理"
+  read_at: "閱讀時間"
+  call: "呼叫"
+  calls: "呼叫"
+  booking_datetime: "記錄日期"
+  address: "地點"
+  latitude: "緯度"
+  longitude: "經度"
+  altitude: "海拔"
+  new: '新'
+  user: '用戶'
+  users: '用戶'
+  guardians: "監護人"
+  guardian: "監護人"
+  phone: "電話號碼"
+  email: "電郵地址"
+  booked: "記錄"
+  assigned: "派工"
+  cancelled: "取消" 
+  quoted: "報價"
+  all: "全部"
+  acknowledged: "確認" 
+  acknowledge: "確認" 
+  working: "工作"
+  completed: "完畢"
+  finished: "待檢" 
+  heading: "標題"
+  due_date: "到期日期"
+  end_date: "結束日期"
+  name: "名稱"
+  chi_name: "中文名稱"
+  icon: "圖標"
+  parent: "祖輩"
+  master: "編碼"
+  masters: "編碼"
+  assignment: "工作"
+  assignments: "工作清單"
+  location: "地點"
+  locations: "地點"
+  work: "工作"
+  time: "時間"
+  status: "狀況"
+  incharge: "負責人"
+  workflow: "工作流分配"
+  chatroom: "聊天室"
+  conversation: "談話"
+  dashboard: "錶板"
+  Flowkus: "辦事通"
+  code: "編碼"
+  notification: "通知"
+  signin: "登入"
+  signout: "登出"
+  signup: "註冊"
+  settings: "設置"
+  start_date: "時間"
+  your_listings: "工作清單"
+  announcements: "通告"
+  announcements_list: "通告檔案"
+  announcement: "通告"
+  start_at: "開始日期"
+  end_at: "結束日期"
+  content: "內容"
+  edit: "編輯"
+  manual:   "手動"
+  auto:     "自動"
+
+  brand: "外務妥"
+
+  workflow_assignments:
+    manual:   "手動"
+    auto:     "自動"
+
+  statuses:
+    Occupied: "有客"
+    Others:   "其他"
+    Vacant:   "吉房"
+
+  smokings:
+    Smoking:    "抽煙"
+    NonSmoking: "禁煙"
+
+  conditions:
+    Clean: "乾淨"
+    Dirty: "要清理"
+
+  errors:
+    messages:
+      carrierwave_processing_error: 處理錯誤
+      carrierwave_integrity_error: 文件類型錯誤
+      carrierwave_download_error: 下載錯誤
+      extension_whitelist_error: "不可上傳 %{extension} 文件, 可上傳文件類型為: %{allowed_types}"
+      extension_blacklist_error: "不可上傳 %{extension} 文件, 不可上傳文件類型為: %{prohibited_types}"
+      content_type_whitelist_error: "不可上傳 %{content_type} 文件"
+      content_type_blacklist_error: "不可上傳 %{content_type} 文件"
+      rmagick_processing_error: "rmagick 錯誤, 也許上傳的的文件不是圖片? 原錯誤: %{e}"
+      mini_magick_processing_error: "MiniMagick 錯誤, 也許上傳的文件不是圖片? 原錯誤: %{e}"
+      min_size_error: "文件大小應大於 %{min_size}"
+      max_size_error: "文件大小應小於 %{max_size}"
+
+  date:
+    order:
+      - :year 
+      - :month
+      - :day
+
+  simple_form:
+    labels:
+      defect:
+        issue: "問題"
+        rating: "評分"
+        remarks: "備註"
+      duty:
+        date_range: "日期範圍"
+        color: "顏色"
+      call:
+        booking_datetime: "記錄日期"
+        address: "地點"
+        latitude: "緯度"
+        longitude: "經度"
+        altitude: "海拔"
+      guardian:
+        guardian_user: "監護人"
+        name: "名字"
+        phone: "電話號碼"
+        email: "電郵地址"
+      duty:
+        user: "負責人"
+        work: "工作"
+        location: "地點"
+        start_datetime: "開始時間"
+        end_datetime: "結束日期"
+      assignment:
+        remarks: "備註"
+        user_ref: "用戶參考"
+        reported: "已報告"
+        followup: "跟進"
+        inspector: "檢查員"
+        witness: "見證人"
+        work_order: "工作合同"
+        worker_user: "工人"
+        contractor: "承建商"
+        comment: "詮釋"
+        address: "地址"
+        name: "稱號"
+        task: "工作"
+        heading: "標題"
+        incharge_user: "負責人"
+        aasm_state: "狀態"
+        work: "工作"
+        location: "地點"
+        start_datetime: "開始時間"
+        due_datetime: "到期日"
+        end_datetime: "結束日期"
+        code: "編碼"
+        name: "名稱"
+        chi_name: "中文名稱"
+        parent: "祖輩"
+      chatroom:
+        incharge_user: "負責人"
+        name: "名稱"
+        chi_name: "中文名稱"
+      location:
+        code: "編碼"
+        name: "名稱"
+        chi_name: "中文名稱"
+        parent: "祖輩"
+      master:
+        code: "編碼"
+        name: "名稱"
+        chi_name: "中文名稱"
+        icon: "圖標"
+        parent: "祖輩"
+      announcement:
+        start_at: "開始日期"
+        end_at: "結束日期"
+        content: "內容"
+        business_unit: "業務部"
+      workflow:
+        assignment: "分配"
+        location: "地點"
+        work: "工作"
+        business_unit: "業務部"
+      user:
+        username: '用戶名稱'
+        password: '密碼'
+    hints:
+      user:
+        username: '要登錄的用戶名'
+        password: '請不要特殊字符'
+    placeholders:
+      user:
+        username: '您的用戶名'
+        password: '****'
+    include_blanks:
+      user:
+        age: '不想說'
+    prompts:
+      user:
+        role: '選擇你的角色'
+
+  helpers:
+    page_entries_info:
+      more_pages:
+        display_entries: "顯示 <b>%{first}&nbsp;-&nbsp;%{last}</b> 筆 %{entry_name}，共 <b>%{total}</b> 筆"
+      one_page:
+        display_entries:
+          one: "只有 <b>1</b> 筆 %{entry_name}"
+          other: "顯示 <b>所有 %{count}</b> 筆 %{entry_name}"
+          zero: "找不到 %{entry_name}"
+  views:
+    pagination:
+      first: "&laquo; 首頁"
+      last: "末頁 &raquo;"
+      next: "下一頁 &rsaquo;"
+      previous: "&lsaquo; 上一頁"
+      truncate: "&hellip;"

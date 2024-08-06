@@ -1,0 +1,185 @@
+<style>
+.break { page-break-before: always; }
+h1 {
+    font-size: 25px;
+}
+h2 {
+    font-size: 18px;
+}
+h3 {
+    font-size: 16px;
+}
+p {
+    font-size: 15px;
+    line-height: 80%;
+}
+.space { margin-top: 1000px; }
+
+table, th, td {
+    table-layout: fixed;
+    border-spacing: 5px;
+    border: 1px solid black;
+    border-collapse: collapse; 
+    font-size: 16px;
+    padding: 6px;
+    padding-bottom: 6px;
+    line-height: 150%;
+}
+
+thead { display: table-header-group }
+tfoot { display: table-row-group }
+tr { page-break-inside: avoid }
+
+table#t01 {
+    padding: 5px;
+    padding-bottom: 5px;
+    width:88%; 
+    height:88%;
+}
+
+table#t02 {
+  height: 2000%;
+  width: 100%;  
+  border: 0;  
+}
+
+#table1 {
+    border:0px solid transparent;
+        font-size: 16px;
+} 
+
+.footer,
+.push {
+  height: 120px;
+}
+
+</style>
+<html>
+<head></head>
+<body>
+<div class="Complaint">
+  <center>
+      <h1>Chiu Hing Construction & Transportation Company Limited</h1>
+      <h2>Highways Department Term Contract, Hong Kong Island excluding High Speed Roads 2017-2023</h2>
+      <h1>Contract No.: 01/HY/2016</h1>
+      <h1><%= assignment.work.name  %></h1>
+  </center>
+  <br><br>
+
+  <table style="width:100%">
+    <tr>
+      <th colspan="2">Works Description : General Slope Maintenance Works</th>
+      <th>Location : <%= assignment.location_address %></th>
+    </tr>
+    
+    <tr>
+      <th>W.O. No.: <%= assignment.work_order %></th>
+      <th>Weather: Cloudy</th>
+      <th>Date of Inspection: <%= assignment.start_datetime.strftime('%F') if assignment.start_datetime? %> </th>
+    </tr>
+  </table>
+
+<br style = “height: 4000px;”><br>
+    <div >
+
+    <div class="row">
+        <div class="col-md-2"><h3>Rating:</h3></div>
+        <div class="col-md-6"><h3>A = Adequate /Satisfactory at time of inspection</h3></div>
+        <div class="col-md-4"><h3>B = Needs improvement</h3></div>
+    </div>
+    <div class="row">
+        <div class="col-md-6"><h2>C = Needs immediate attention</h2></div>
+        <div class="col-md-4"><h2>N/A = Not applicable </h2></div>
+    </div>
+    </div>
+    <br>
+<br style=“height: 2000px;”><br>
+
+          <% if assignment.defects.count > 0 %>
+            <table  class="table table-striped">
+              <thead>
+                  <tr>
+                    <th colspan="2"><center>Content Title</center></th> 
+                    <th><center>Location</center></th>
+                    <th><center>Rating</center></th>
+                    <th><center>Due Date</center></th>
+                    <th><center>Responsible</center></th>
+                  </tr> 
+              </thead>
+              <tbody>
+                  <% assignment.defects.each do |defect| %>
+                    <tr>
+                      <td colspan="2"><%= defect.issue.code  %>
+                        <%= defect.issue.name  %><br>
+                        <%= defect.remarks %></td>
+                      <td>Near Entrance</td>
+                      <td><center><%= defect.rating  %></center></td>
+                      <td><center><%= assignment.due_datetime.strftime('%F') %></center></td>
+                      <td><center>Wah Fung Limited
+                        </center></td>
+                    </tr>
+                <% end %>
+              </tbody>
+            </table>
+          <% end %>
+
+
+</body>
+<footer class="footer">
+  <table id= "t01" style="width:100%">
+    <tr>
+      <td>Inspected By: <%= assignment.inspector.name if assignment.inspector_id? %></td>
+      <td>Signature:</td>
+      <td>Designation: <%= assignment.inspector.designation if assignment.inspector_id? %></td>
+    </tr>
+    <tr>
+      <td>Witnessed By: <%= assignment.witness.name if assignment.witness_id? %></td>
+      <td>Signature:</td>
+      <td>Designation: <%= assignment.witness.designation if assignment.witness_id? %></td>
+    </tr>
+  </table>
+</footer>
+</div>
+
+<p style="page-break-before: always"></p>
+
+
+          <% if assignment.defects.count > 0 %>
+            <table id="t02" >
+              <thead>
+                <th colspan="2">Before Work</th>
+                <th colspan="2">After Work</th>
+                <th colspan="1">Issue and Location </th>
+              </thead>
+              <tbody>
+                  <% assignment.defects.each do |defect| %>
+                    <tr>
+                      <td colspan="2"><%= wicked_pdf_image_tag defect.before_photo.medium.url if defect.before_photo? %></td>
+                      <td colspan="2"><%= wicked_pdf_image_tag defect.after_photo.medium.url if defect.after_photo? %></td>
+                      <td colspan="1"><%= defect.issue.code  %> <%= defect.issue.name  %> (<%= defect.rating  %>) <br> Near the entrance <br>Need Immediate Action </td>
+                    </tr>
+                <% end %>
+              </tbody>
+            </table>
+          <% end %>
+
+<p style="page-break-before: always"></p>
+
+<%= image_tag "https://maps.google.com/maps/api/staticmap?size=900x600&key=AIzaSyA9afljyyIF4GlEhb51-IqK-FH2i7IqJCg&language=zh-TW&sensor=false&zoom=16&markers=#{assignment.latitude}%2C#{assignment.longitude}" %>
+<br><br>
+
+<table>
+      <thead>
+
+      </thead>
+     <tbody>
+       <tr>
+      <% assignment.photos.each do |photo| %>
+          <td>
+             <%= wicked_pdf_image_tag photo.image.medium.url %>
+          </td>
+      <% end %>
+    </tr>
+     </tbody>
+</table>
+
